@@ -31,9 +31,14 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    void addTab();
+    void closeEvent (QCloseEvent *event);
 
-    void closeTab(int index);
+    void addTab(QString fileName = "*Nová Hra");
+
+    void actualiseTabName();
+
+    bool closeTab(int index, bool force = false);
+
 };
 
 #endif // MAINWINDOW_H

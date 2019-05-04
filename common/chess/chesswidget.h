@@ -15,6 +15,14 @@ public:
     explicit ChessWidget(QWidget *parent = nullptr);
     ~ChessWidget();
 
+    bool isSaved();
+
+    QString getFileName();
+
+    bool loadFile();
+
+    void saveFile(bool saveAs = false);
+
 private:
     Ui::ChessWidget *ui;
 
