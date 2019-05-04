@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "chesswidget.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -45,7 +47,7 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 
 void MainWindow::addTab()
 {
-    QWidget* newGame = new QWidget;
+    ChessWidget* newGame = new ChessWidget;
 
     ui->tabWidget->addTab(newGame, "*New Game");
     ui->tabWidget->setCurrentWidget(newGame);

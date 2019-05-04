@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::ChessWidget *ui;
+
+    bool saved;
+    QString fileName;
+
 };
 
 #endif // CHESSWIDGET_H
