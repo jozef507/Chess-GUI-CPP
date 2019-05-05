@@ -3,10 +3,13 @@
 //
 
 #include "FigureKnight.h"
+#include "FiguresManager.h"
+#include "Field.h"
 #include "cmath"
 
 FigureKnight::FigureKnight(bool isWhite)
 {
+    this->ID = 3;
     this->isWhite = isWhite;
     this->isRemovingFigure = false;
     this->actField = nullptr;
@@ -34,7 +37,7 @@ void FigureKnight::nulActualPosition()
 }
 
 
-int FigureKnight::move(Field *moveTo)
+int FigureKnight::move(Field *moveTo, FiguresManager *figuresManager)
 {
     if(this->actField == nullptr)
         return -1;
@@ -51,16 +54,29 @@ int FigureKnight::move(Field *moveTo)
         return -1;
 
     int flag = 1;
+    Figure *movetoFigure = nullptr;
+    Field *prevField = this->actField;
+
     if(this->isRemovingFigure)
     {
-        Figure *movetoFigure = moveTo->get();
+        movetoFigure = moveTo->get();
         moveTo->remove(movetoFigure);
         this->isRemovingFigure = false;
         flag = 2;
     }
-
     this->actField->remove(this);
     moveTo->put(this);
+
+    if(!figuresManager->updateFigures(this->isWhiteF(), this, movetoFigure))
+    {
+        moveTo->remove(this);
+        prevField->put(this);
+        if (flag == 2)
+        {
+            moveTo->put(movetoFigure);
+        }
+        flag = -1;
+    }
 
     return flag;
 }
@@ -79,8 +95,8 @@ bool FigureKnight::isMovementPossible(int actCol, int actRow, Field *moveTo, int
         if(movetoFigure->isWhiteF() == this->isWhiteF())
             return false;
 
-        /*if(movetoFigure instanceof King)
-        return false;*/
+        if(movetoFigure->getID() == 0)
+            return false;
 
         this->isRemovingFigure = true;
     }
@@ -88,14 +104,105 @@ bool FigureKnight::isMovementPossible(int actCol, int actRow, Field *moveTo, int
     return true;
 }
 
-bool FigureKnight::checkDirection(Field::Direction dir, int diff)
+
+void FigureKnight::setFieldsInDanger()
 {
-    Field *nextField=this->actField;
-    for (int i = 0; i < diff-1; i++)
+    this->fieldsInDanger.clear();
+
+    Field *tmpField, *nextField;
+
+    nextField = this->actField->nextField(Field::Direction::U);
+    if(nextField != nullptr)
     {
-        nextField = nextField->nextField(dir);
-        if(!(nextField->isEmpty()))
-            return false;
+        nextField = nextField->nextField(Field::Direction::U);
+        if(nextField != nullptr)
+        {
+            tmpField = nextField->nextField(Field::Direction::L);
+            nextField = nextField->nextField(Field::Direction::R);
+
+            if (tmpField != nullptr)
+                this->fieldsInDanger.push_back(tmpField);
+            if (nextField != nullptr)
+                this->fieldsInDanger.push_back(nextField);
+        }
     }
-    return true;
+
+    nextField = this->actField->nextField(Field::Direction::L);
+    if(nextField != nullptr)
+    {
+        nextField = nextField->nextField(Field::Direction::L);
+        if(nextField != nullptr)
+        {
+            tmpField = nextField->nextField(Field::Direction::U);
+            nextField = nextField->nextField(Field::Direction::D);
+
+            if (tmpField != nullptr)
+                this->fieldsInDanger.push_back(tmpField);
+            if (nextField != nullptr)
+                this->fieldsInDanger.push_back(nextField);
+        }
+    }
+    nextField = this->actField->nextField(Field::Direction::D);
+    if(nextField != nullptr)
+    {
+        nextField = nextField->nextField(Field::Direction::D);
+        if(nextField != nullptr)
+        {
+            tmpField = nextField->nextField(Field::Direction::L);
+            nextField = nextField->nextField(Field::Direction::R);
+
+            if (tmpField != nullptr)
+                this->fieldsInDanger.push_back(tmpField);
+            if (nextField != nullptr)
+                this->fieldsInDanger.push_back(nextField);
+        }
+    }
+    nextField = this->actField->nextField(Field::Direction::R);
+    if(nextField != nullptr)
+    {
+        nextField = nextField->nextField(Field::Direction::R);
+        if(nextField != nullptr)
+        {
+            tmpField = nextField->nextField(Field::Direction::U);
+            nextField = nextField->nextField(Field::Direction::D);
+
+            if (tmpField != nullptr)
+                this->fieldsInDanger.push_back(tmpField);
+            if (nextField != nullptr)
+                this->fieldsInDanger.push_back(nextField);
+        }
+    }
+}
+
+std::vector<Field*> FigureKnight::getFieldsInDanger()
+{
+    return this->fieldsInDanger;
+}
+
+int FigureKnight::getID()
+{
+    return this->ID;
+}
+
+std::vector<Field*> FigureKnight::getFieldsOfDirectionToField(Field *field)
+{
+    if(!(std::find(this->fieldsInDanger.begin(), this->fieldsInDanger.end(), field) != this->fieldsInDanger.end()))
+    {
+        return {};
+    }
+
+    std::vector<Field*> fieldsOfDirToField;
+    fieldsOfDirToField.push_back(this->actField);
+
+    return fieldsOfDirToField;
+}
+
+std::vector<Field*> FigureKnight::getFieldsForPossMov()
+{
+    return this->fieldsInDanger;
+}
+
+std::vector<Field*> FigureKnight::getFieldsInDangerChesMat()
+{
+    return this->fieldsInDanger;
 }

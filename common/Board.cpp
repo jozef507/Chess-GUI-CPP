@@ -3,6 +3,7 @@
 //
 
 #include "Board.h"
+#include "Figure.h"
 
 Board::Board(int size)
 {
@@ -43,11 +44,11 @@ Board::~Board()
         for(int j = 0; j < 8; j++)
         {
             Field *field=  this->board[i][j];
-            if (!field->isEmpty())
+            /*if (!field->isEmpty())
             {
                 Figure *figure = field->get();
                 delete figure;
-            }
+            }*/
             delete field;
         }
     }

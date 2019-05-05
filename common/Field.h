@@ -5,7 +5,7 @@
 #ifndef ICP_FIELD_H
 #define ICP_FIELD_H
 
-#include "Figure.h"
+
 
 
 #define DIRECTIONCOUNT 8

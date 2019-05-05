@@ -79,59 +79,51 @@ protected:
 
 };
 */
-int main(void) {
-/*
-    Rectangle Rect;
-    Triangle  tri(5,7, &Rect);
-    Triangle *tri1 = new Triangle(5,5, &Rect);
-    Shape *s;
-    s = tri1;
-
-    Rect.setWidth(5);
-    Rect.setHeight(7);
-
-    // Print the area of the object.
-    cout << "Total Rectangle area: " << Rect.getArea() << endl;
+int main(void)
+{
 
 
-    // Print the area of the object.
-    cout << "Total Triangle area: " << (*s).getArea() << endl;
-
-    tri.nulRect();
-    cout << "Total Triangle area: " << (*s).getArea() << endl;
-
-    cout << "Total Rectangle area: " << Rect.getArea() << endl;
-
-    //return 0;
-*/
-    /*Board *board = new Board(8);
-    Board *board1 = new Board(8);
-    Field *i = board->getField(1,1);
-    Field *j = board->getField(8,8);
-    Field *k = board1->getField(1,1);
-    Field *l = board1->getField(8,8);
-
-    FigurePawn *figurePawn = new FigurePawn(true);
-    Figure *figure = figurePawn;
-
-    bool apo = i->isEmpty();
-    i->put(figure);
-    apo = i->isEmpty();
-
-    delete board;
-    delete board1;
-    ;*/
-
-    Game *game = new GameChess();
-    Field *i = game->getField(1,8);
-    Field *j = game->getField(2,8);
-    Field *k = game->getField(3,8);
-    Field *l = game->getField(4,8);
+    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\subor2.txt");
+    for (int i = 0; i < 77; ++i) {
+        game->setPlaybackMovement();
+        game->performPlaybackMovement();
+        if(game->getIsChangingFigure())
+        {
+            game->createNewFigure(game->getChangingFigureID());
+        }
+        game->incrementIndexOfNotationLines();
+        game->completeNotationMovement();
+        game->nullMovementManager();
+        game->changePlayer();
+    }
 
 
-    game->setMovement(1,2);
-    game->setMovement(1,3);
-    int movement = game->performMovement();
+    for (int i = 76; i >=39; --i) {
+        game->setPlaybackUndoMovement();
+        game->performPlaybackUndoMovement();
+        game->decrementIndexOfNotationLines();
+        game->nullMovementManager();
+    }
+
+
+    game->setPlayerMovement(3,4);
+    game->setPlayerMovement(2,3);
+    bool movement = game->performPlayerMovement();
+
+    game->addPlayerNotationMovement();
+    game->completeNotationMovement();
+    game->nullMovementManager();
+    game->changePlayer();
+
+
+    game->setPlayerMovement(6,1);
+    game->setPlayerMovement(2,1);
+    movement = game->performPlayerMovement();
+
+    game->addPlayerNotationMovement();
+    game->completeNotationMovement();
+    game->nullMovementManager();
+    game->changePlayer();
 
     delete game;
 
