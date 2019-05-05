@@ -5,7 +5,6 @@
 #ifndef ICP_BOARD_H
 #define ICP_BOARD_H
 
-#include "Figure.h"
 #include "Field.h"
 
 class Board

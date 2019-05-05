@@ -3,6 +3,7 @@
 //
 
 #include "Field.h"
+#include "Figure.h"
 
 Field::Field(int col, int row)
 {

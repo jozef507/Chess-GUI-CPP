@@ -5,19 +5,15 @@
 #ifndef ICP_CHESSGAME_H
 #define ICP_CHESSGAME_H
 
-#include "Board.h"
 #include "Game.h"
-#include "Notation.h"
-#include "MovementManager.h"
+#include <string>
+#include <vector>
 
-#include "FigurePawn.h"
-#include "FigureRook.h"
-#include "FigureBishop.h"
-#include "FigureQueen.h"
-#include "FigureKnight.h"
-#include "FigureKing.h"
-
+class MovementManager;
+class Notation;
 class Field;
+class Board;
+class FiguresManager;
 
 class GameChess: public Game
 {
@@ -25,6 +21,7 @@ class GameChess: public Game
 private:
     Board *board;
     MovementManager *movementManager;
+    FiguresManager *figuresManager;
     Notation *notation;
 
     //List<Figure> activeWhiteFigures;
@@ -39,23 +36,47 @@ private:
 
 
 public:
-    GameChess();
+    GameChess(std::string path);
     ~GameChess();
-    virtual void nullMovementManager();
-    virtual bool setMovement(int col, int row);
-    virtual int performMovement();
-    virtual void changePlayer();
-    virtual bool isWhiteOnTheMove();
-    virtual void setCanPlayerPlay(bool canPlayerPlay);
     virtual Field *getGoalField();
+    virtual void changePlayer();
+    virtual void setCanPlayerPlay(bool canPlayerPlay);
+    virtual void nullMovementManager();
+
+    virtual bool setPlayerMovement(int col, int row);
+    virtual bool setPlaybackMovement();
+    virtual bool performPlayerMovement();
+    virtual bool performPlaybackMovement();
+    virtual bool setPlaybackUndoMovement();
+    virtual bool performPlaybackUndoMovement();
+
+    virtual bool isWhiteOnTheMove();
+    //getImageOfMovFigure;
+    //getImageOfGoalFieldFigure;
+    virtual std::vector<std::string> getGameNotation();
+    virtual int getIndexOfGameNotation();
+    virtual bool isMovementCompletlySet();
+    virtual bool isRemovingFigure();
+    virtual bool getChess();
+    virtual bool getChessMat();
+    virtual bool getIsChangingFigure ();
+    virtual bool createNewFigure(/*ImageView image, */int id);
+
+    virtual void setChangedFigureField();
+    virtual void addPlayerNotationMovement();
+    virtual bool saveNotation() ;
+    virtual int getChangingFigureID();
+    virtual void incrementIndexOfNotationLines();
+    virtual void decrementIndexOfNotationLines();
+    virtual bool isFirstIndexOfNotation() ;
+    virtual bool isLastIndexOfNotation();
+    virtual void completeNotationMovement();
+    virtual MovementManager *getMovementManager();
+    virtual bool isNotationRight();
+
 
     //TODO - delete this function
     virtual Field *getField(int col, int row);
-
-    //virtual ImageView getImageOfMovFigure();
-    //virtual ImageView getImageOfGoalFieldFigure();
-
-    //virtual List<String> getGameNotation();
 
 
 };
