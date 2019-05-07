@@ -25,12 +25,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        ../logic/Board.cpp \
+        ../logic/Field.cpp \
+        ../logic/FigureBishop.cpp \
+        ../logic/FigureKing.cpp \
+        ../logic/FigureKnight.cpp \
+        ../logic/FigurePawn.cpp \
+        ../logic/FigureQueen.cpp \
+        ../logic/FigureRook.cpp \
+        ../logic/FiguresManager.cpp \
+        ../logic/Game.cpp \
+        ../logic/GameChess.cpp \
+        ../logic/MovementManager.cpp \
+        ../logic/Notation.cpp \
+        ../logic/NotationMovement.cpp \
         boardwidget.cpp \
         chesswidget.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        ../logic/Board.h \
+        ../logic/Field.h \
+        ../logic/Figure.h \
+        ../logic/FigureBishop.h \
+        ../logic/FigureKing.h \
+        ../logic/FigureKnight.h \
+        ../logic/FigurePawn.h \
+        ../logic/FigureQueen.h \
+        ../logic/FigureRook.h \
+        ../logic/FiguresManager.h \
+        ../logic/Game.h \
+        ../logic/GameChess.h \
+        ../logic/MovementManager.h \
+        ../logic/Notation.h \
+        ../logic/NotationMovement.h \
+        ../logic/game.h \
         boardwidget.h \
         chesswidget.h \
         mainwindow.h
