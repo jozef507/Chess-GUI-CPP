@@ -14,6 +14,12 @@ class Game
 {
 public:
     virtual ~Game()= default;
+    virtual int getFigureIDOnField(int col, int row) = 0;
+    virtual bool getIsWhiteFigureOnField(int col, int row) = 0;
+    virtual int getStartFieldCol() = 0;
+    virtual int getStartFieldRow() = 0;
+    virtual int getGoalFieldCol() = 0;
+    virtual int getGoalFieldRow() = 0;
     virtual Field *getGoalField() = 0;
     virtual void changePlayer() = 0;
     virtual void setCanPlayerPlay(bool canPlayerPlay) = 0;
