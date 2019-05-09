@@ -36,27 +36,30 @@ bool QtGame::saveFile()
     return gameLogic->saveNotation();
 }
 
-
 bool QtGame::isFieldEmpty(int posX, int posY)
 {
-    try
-    {
-        gameLogic->getFigureIDOnField(posX, posY);
-    }
-    catch (...)
-    {
-        return true;
-    }
-    return false;
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
+    return gameLogic->isFieldEmpty(posX, posY);
 }
 
 FigureType QtGame::getFigureType(int posX, int posY)
 {
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
     return typeFromId(gameLogic->getFigureIDOnField(posX, posY));
 }
 
 TeamColor QtGame::getFigureColor(int posX, int posY)
 {
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
     return gameLogic->getIsWhiteFigureOnField(posX, posY) ? TeamColor::white : TeamColor::black;
 }
 
@@ -210,6 +213,12 @@ bool QtGame::previousPosition()
 */
 bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
 {
+    // Chessboard indexing correction
+    srcX += 1;
+    srcY += 1;
+    dstX += 1;
+    dstY += 1;
+
     gameLogic->nullMovementManager();
 
     if (!gameLogic->setPlayerMovement(srcX, srcY))
