@@ -2,7 +2,7 @@
 #include "ui_boardwidget.h"
 #include <iostream>
 
-BoardWidget::BoardWidget(QtGame* newGame, QWidget *parent) :
+BoardWidget::BoardWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BoardWidget)
 {
@@ -12,14 +12,18 @@ BoardWidget::BoardWidget(QtGame* newGame, QWidget *parent) :
 
     figures = figureBuffer(8, std::vector<QLabel*>(8));
 
-    game = newGame;
-
-    updateBoard();
 }
 
 BoardWidget::~BoardWidget()
 {
     delete ui;
+}
+
+void BoardWidget::setGame(QtGame* newGame)
+{
+    game = newGame;
+
+    updateBoard();
 }
 
 void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)

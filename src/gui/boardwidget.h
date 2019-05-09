@@ -18,8 +18,10 @@ class BoardWidget : public QWidget
 
 public:
 
-    explicit BoardWidget(QtGame* newGame, QWidget *parent = nullptr);
+    explicit BoardWidget(QWidget *parent = nullptr);
     ~BoardWidget();
+
+    void setGame(QtGame* newGame);
 
     int heightForWidth(int w) const;
 

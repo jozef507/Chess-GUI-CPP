@@ -15,11 +15,12 @@ ChessWidget::ChessWidget(QWidget *parent) :
     saved = false;
     fileName = nullptr;
 
+    // Chess board
+    board = new BoardWidget;
+    ui->horizontalLayout->replaceWidget(ui->frame, board);
+
     game = new QtGame(this);
 
-    // Chess board
-    board = new BoardWidget(game);
-    ui->horizontalLayout->replaceWidget(ui->frame, board);
 }
 
 ChessWidget::~ChessWidget()

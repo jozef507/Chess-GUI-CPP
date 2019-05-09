@@ -8,12 +8,15 @@ QtGame::QtGame(GuiInterface* newGui, QString fileName)
     gui = newGui;
     gameLogic = new GameChess(fileName.toUtf8().constData());
 
+    // Initialization cannot access gui
+    /*
     gui->updateBoard();
 
     std::vector<std::string> notation = gameLogic->getGameNotation();
     int notationIndex = gameLogic->getIndexOfGameNotation() + 1; // Proc +1 ??
 
     gui->updateNotation(notation, notationIndex);
+    */
 }
 
 bool QtGame::setFile(QString fileName)
