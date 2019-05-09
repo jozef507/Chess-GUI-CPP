@@ -14,6 +14,7 @@ class Game
 {
 public:
     virtual ~Game()= default;
+    virtual bool isFieldEmpty(int col, int row) = 0;
     virtual int getFigureIDOnField(int col, int row) = 0;
     virtual bool getIsWhiteFigureOnField(int col, int row) = 0;
     virtual int getStartFieldCol() = 0;

@@ -38,6 +38,7 @@ private:
 public:
     GameChess(std::string path);
     ~GameChess();
+    virtual bool isFieldEmpty(int col, int row);
     virtual int getFigureIDOnField(int col, int row);
     virtual bool getIsWhiteFigureOnField(int col, int row);
     virtual int getStartFieldCol();

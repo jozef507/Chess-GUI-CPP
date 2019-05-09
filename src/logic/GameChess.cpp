@@ -348,6 +348,11 @@ bool GameChess::isNotationRight()
 //TODO - delete this function
 Field *GameChess::getField(int col, int row) { return this->board->getField(col, row);}
 
+bool GameChess::isFieldEmpty(int col, int row)
+{
+    return board->getField(col, row)->isEmpty();
+}
+
 int GameChess::getFigureIDOnField(int col, int row)
 {
     return this->board->getField(col, row)->get()->getID();
