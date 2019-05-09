@@ -16,6 +16,11 @@ QtGame::QtGame(GuiInterface* newGui, QString fileName)
     gui->updateNotation(notation, notationIndex);
 }
 
+QtGame::~QtGame()
+{
+    delete gameLogic;
+}
+
 bool QtGame::setFile(QString fileName)
 {
     // set new filename for existing game
@@ -207,12 +212,15 @@ bool QtGame::previousPosition()
 */
 bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
 {
+#include <iostream>
+std::cout << "HERE\n";
     gameLogic->nullMovementManager();
-
+std::cout << "HERE\n";
     if (!gameLogic->setPlayerMovement(srcX, srcY))
     {
         return false;
     }
+std::cout << "HERE\n";
     if (!gameLogic->setPlayerMovement(dstX, dstY))
     {
         return false;
@@ -221,6 +229,7 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     {
         return false;
     }
+
     if (!gameLogic->performPlayerMovement())
     {
         return false;
