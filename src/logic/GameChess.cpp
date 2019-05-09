@@ -347,3 +347,35 @@ bool GameChess::isNotationRight()
 
 //TODO - delete this function
 Field *GameChess::getField(int col, int row) { return this->board->getField(col, row);}
+
+int GameChess::getFigureIDOnField(int col, int row)
+{
+    return this->board->getField(col, row)->get()->getID();
+}
+
+bool GameChess::getIsWhiteFigureOnField(int col, int row)
+{
+    return this->board->getField(col, row)->get()->isWhiteF();
+}
+
+int GameChess::getStartFieldCol()
+{
+    return this->movementManager->getStartField()->getColPos();
+}
+
+int GameChess::getStartFieldRow()
+{
+    return this->movementManager->getStartField()->getRowPos();
+}
+
+int GameChess::getGoalFieldCol()
+{
+    return this->movementManager->getGoalField()->getColPos();
+
+}
+
+int GameChess::getGoalFieldRow()
+{
+    return this->movementManager->getGoalField()->getRowPos();
+
+}

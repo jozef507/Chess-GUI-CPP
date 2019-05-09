@@ -38,6 +38,12 @@ private:
 public:
     GameChess(std::string path);
     ~GameChess();
+    virtual int getFigureIDOnField(int col, int row);
+    virtual bool getIsWhiteFigureOnField(int col, int row);
+    virtual int getStartFieldCol();
+    virtual int getStartFieldRow();
+    virtual int getGoalFieldCol();
+    virtual int getGoalFieldRow();
     virtual Field *getGoalField();
     virtual void changePlayer();
     virtual void setCanPlayerPlay(bool canPlayerPlay);
