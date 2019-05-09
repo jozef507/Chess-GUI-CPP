@@ -1,11 +1,19 @@
 #include "QtGame.h"
 
 #include <QString>
+#include <iostream>
 
 QtGame::QtGame(GuiInterface* newGui, QString fileName)
 {
     gui = newGui;
     gameLogic = new GameChess(fileName.toUtf8().constData());
+
+    gui->updateBoard();
+
+    std::vector<std::string> notation = gameLogic->getGameNotation();
+    int notationIndex = gameLogic->getIndexOfGameNotation() + 1; // Proc +1 ??
+
+    gui->updateNotation(notation, notationIndex);
 }
 
 bool QtGame::setFile(QString fileName)
@@ -25,6 +33,29 @@ bool QtGame::saveFile()
     return gameLogic->saveNotation();
 }
 
+
+bool QtGame::isFieldEmpty(int posX, int posY)
+{
+    try
+    {
+        gameLogic->getFigureIDOnField(posX, posY);
+    }
+    catch (...)
+    {
+        return true;
+    }
+    return false;
+}
+
+FigureType QtGame::getFigureType(int posX, int posY)
+{
+    return typeFromId(gameLogic->getFigureIDOnField(posX, posY));
+}
+
+TeamColor QtGame::getFigureColor(int posX, int posY)
+{
+    return gameLogic->getIsWhiteFigureOnField(posX, posY) ? TeamColor::white : TeamColor::black;
+}
 
 
 bool QtGame::setPosition(int index)
@@ -85,14 +116,20 @@ bool QtGame::nextPosition()
         return false;
     }
 
-    //gui->updateFigurePosition( ?? );
+    gui->updateFigurePosition(gameLogic->getStartFieldCol(), gameLogic->getStartFieldRow(),
+                              gameLogic->getGoalFieldCol(), gameLogic->getGoalFieldRow());
 
     if(gameLogic->getIsChangingFigure())
     {
-        int typeId = gameLogic->getChangingFigureID();
-        int figureColor = gameLogic->isWhiteOnTheMove();
+        int col = gameLogic->getGoalFieldCol();
+        int row = gameLogic->getGoalFieldRow();
 
-        //gui->changeFigureType(typeFromId(typeId), ?? );
+        int typeId = gameLogic->getFigureIDOnField(col, row);
+        FigureType figureType = typeFromId(typeId);
+
+        TeamColor figureColor = gameLogic->getIsWhiteFigureOnField(col, row) ? TeamColor::white : TeamColor::black;
+
+        gui->changeFigureType(figureType, figureColor, col, row);
     }
 
     gameLogic->incrementIndexOfNotationLines();
@@ -137,7 +174,8 @@ bool QtGame::previousPosition()
         return false;
     }
 
-    //gui->updateFigurePosition( ?? );
+    gui->updateFigurePosition(gameLogic->getStartFieldCol(), gameLogic->getStartFieldRow(),
+                              gameLogic->getGoalFieldCol(), gameLogic->getGoalFieldRow() );
 
     gameLogic->decrementIndexOfNotationLines();
 
@@ -214,11 +252,18 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
 }
 
 /*
- * (1-queen, 2-bishop, 3-knight, 4-rook)
+ * 0 - king
+ * 1 - queen
+ * 2 - bishop
+ * 3 - knight
+ * 4 - rook
+ * 5 - pawn
  */
 FigureType QtGame::typeFromId(int id)
 {
     switch (id) {
+        case 0:
+            return  FigureType::king;
         case 1:
             return FigureType::queen;
         case 2:
@@ -227,6 +272,8 @@ FigureType QtGame::typeFromId(int id)
             return FigureType::knight;
         case 4:
             return FigureType::rook;
+        case 5:
+            return FigureType::pawn;
         default:
             return FigureType::invalid;
     }

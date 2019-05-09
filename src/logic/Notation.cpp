@@ -14,7 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
-
+#include <cctype>
 
 Notation::Notation(std::string path)
 {

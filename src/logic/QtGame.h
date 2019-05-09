@@ -24,6 +24,10 @@ public:
     QString getFile();
     bool saveFile();
 
+    bool isFieldEmpty(int posX, int posY);
+    FigureType getFigureType(int posX, int posY);
+    TeamColor getFigureColor(int posX, int posY);
+
     bool setPosition(int index);
     bool nextPosition();
     bool previousPosition();

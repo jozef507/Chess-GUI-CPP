@@ -25,6 +25,7 @@ public:
 
     void moveFigure(int srcX, int srcY, int dstX, int dstY);
     void changeFigure(FigureType type, TeamColor color, int posX, int posY);
+    void updateBoard();
 
 private:
     Ui::BoardWidget *ui;

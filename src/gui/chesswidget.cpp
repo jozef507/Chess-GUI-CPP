@@ -26,6 +26,7 @@ ChessWidget::~ChessWidget()
 {
     delete ui;
 }
+
 /*
  * 0 - king
  * 1 - queen
@@ -38,7 +39,7 @@ int ChessWidget::getNewFigureId()
 {
     int id = 1;
 
-    // get id from user
+    // TODO: get id from user
 
     return id;
 }
@@ -53,9 +54,14 @@ void ChessWidget::changeFigureType(FigureType newType, TeamColor color, int posX
     board->changeFigure(newType, color, posX, posY);
 }
 
+void ChessWidget::updateBoard()
+{
+    board->updateBoard();
+}
+
 void ChessWidget::updateNotation(std::vector<std::string> notation, int index)
 {
-
+    // TODO:
 }
 
 
