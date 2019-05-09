@@ -34,11 +34,11 @@ SOURCES += \
         ../logic/FigureQueen.cpp \
         ../logic/FigureRook.cpp \
         ../logic/FiguresManager.cpp \
-        ../logic/Game.cpp \
         ../logic/GameChess.cpp \
         ../logic/MovementManager.cpp \
         ../logic/Notation.cpp \
         ../logic/NotationMovement.cpp \
+        ../logic/QtGame.cpp \
         boardwidget.cpp \
         chesswidget.cpp \
         main.cpp \
@@ -60,9 +60,11 @@ HEADERS += \
         ../logic/MovementManager.h \
         ../logic/Notation.h \
         ../logic/NotationMovement.h \
-        ../logic/game.h \
+        ../logic/QtGame.h \
         boardwidget.h \
+        chesstypes.h \
         chesswidget.h \
+        guiinterface.h \
         mainwindow.h
 
 FORMS += \
