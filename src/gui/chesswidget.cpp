@@ -6,8 +6,6 @@
 
 #include <QTextStream>
 
-#include "boardwidget.h"
-
 ChessWidget::ChessWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ChessWidget)
@@ -17,16 +15,49 @@ ChessWidget::ChessWidget(QWidget *parent) :
     saved = false;
     fileName = nullptr;
 
-    // Chess board
-    BoardWidget* board = new BoardWidget;
-    ui->horizontalLayout->replaceWidget(ui->frame, board);
+    game = new QtGame(this);
 
+    // Chess board
+    board = new BoardWidget(game);
+    ui->horizontalLayout->replaceWidget(ui->frame, board);
 }
 
 ChessWidget::~ChessWidget()
 {
     delete ui;
 }
+/*
+ * 0 - king
+ * 1 - queen
+ * 2 - bishop
+ * 3 - knight
+ * 4 - rook
+ * 5 - pawn
+ */
+int ChessWidget::getNewFigureId()
+{
+    int id = 1;
+
+    // get id from user
+
+    return id;
+}
+
+void ChessWidget::updateFigurePosition(int srcX, int srcY, int dstX, int dstY)
+{
+    board->moveFigure(srcX, srcY, dstX, dstY);
+}
+
+void ChessWidget::changeFigureType(FigureType newType, TeamColor color, int posX, int posY)
+{
+    board->changeFigure(newType, color, posX, posY);
+}
+
+void ChessWidget::updateNotation(std::vector<std::string> notation, int index)
+{
+
+}
+
 
 bool ChessWidget::isSaved()
 {
@@ -82,4 +113,24 @@ void ChessWidget::saveFile(bool saveAs)
     // TODO: Save File
 
     saved = true;
+}
+
+void ChessWidget::on_buttonToFirst_clicked()
+{
+    game->setPosition(0);
+}
+
+void ChessWidget::on_buttonPrevious_clicked()
+{
+    game->previousPosition();
+}
+
+void ChessWidget::on_buttonNext_clicked()
+{
+    game->nextPosition();
+}
+
+void ChessWidget::on_buttonToLast_clicked()
+{
+    while (game->nextPosition());
 }

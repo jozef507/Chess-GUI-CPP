@@ -5,6 +5,9 @@
 #include <QLabel>
 #include <QResizeEvent>
 
+#include "chesstypes.h"
+#include "../logic/QtGame.h"
+
 namespace Ui {
 class BoardWidget;
 }
@@ -14,25 +17,14 @@ class BoardWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum class TeamColor
-    {
-        white,
-        black
-    };
-    enum class FigureType
-    {
-        pawn,
-        rogue,
-        knight,
-        bishop,
-        queen,
-        king
-    };
 
-    explicit BoardWidget(QWidget *parent = nullptr);
+    explicit BoardWidget(QtGame* newGame, QWidget *parent = nullptr);
     ~BoardWidget();
 
     int heightForWidth(int w) const;
+
+    void moveFigure(int srcX, int srcY, int dstX, int dstY);
+    void changeFigure(FigureType type, TeamColor color, int posX, int posY);
 
 private:
     Ui::BoardWidget *ui;
@@ -44,7 +36,14 @@ private:
     double figureSize = 110;
 
     double scale;
-    //QLabel* labels[8][8];
+
+    QtGame* game;
+
+    QPoint moveFrom;
+    bool moveByClick;
+    bool moveByDrag;
+    bool moveInvalid;
+    QLabel* moveImg;
 
     typedef std::vector<std::vector<QLabel*>> figureBuffer;
     figureBuffer figures;
@@ -53,6 +52,12 @@ private:
 
     void addFigure(FigureType type, TeamColor team, int posX, int posY);
     QPoint getFigureImgPosition(int x, int y);
+
+    void mousePressEvent(QMouseEvent *event);
+
+    void mouseReleaseEvent(QMouseEvent *event);
+
+    void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif // BOARDWIDGET_H
