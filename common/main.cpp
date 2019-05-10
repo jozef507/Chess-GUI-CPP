@@ -4,86 +4,37 @@
 #include "Game.h"
 #include "GameChess.h"
 using namespace std;
-/*
-// Base class
-class Shape{
-public:
-    virtual int getArea()=0;
-    virtual void setWidth(int w) = 0;
-    virtual void setHeight(int h) = 0;
-    bool isEmpty();
-};
-
-// Derived classes
-class Rectangle: public Shape {
-public:
-    int getArea() {
-        return (width * height);
-    }
-
-    void setWidth(int w) {
-        width = w;
-    }
-
-    void setHeight(int h) {
-        height = h;
-    }
-
-protected:
-    int width;
-    int height;
-
-};
-
-class Triangle: public Shape {
-public:
-
-    Triangle(int width, int height, Rectangle *rect)
-    {
-        this->height = height;
-        this->width = width;
-        this->rect = rect;
-    }
-
-    int getArea() {
-        if(this->rect == nullptr)
-        {
-            return (width * height)/2;
-        } else
-        {
-            this->rect->setHeight(4);
-            this->rect->setWidth(4);
-            return this->rect->getArea();
-        }
-    }
-
-    void setWidth(int w) {
-        width = w;
-    }
-
-    void setHeight(int h) {
-        height = h;
-    }
-
-    void nulRect()
-    {
-        this->rect = nullptr;
-    }
-
-protected:
-    Rectangle *rect;
-
-protected:
-    int width;
-    int height;
-
-};
-*/
 int main(void)
 {
 
 
-    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\subor2.txt");
+    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\notations\\subor2.txt");
+
+    if(game->getIsFieldEmpty(1,1))
+        printf("Je prazdna;\n");
+    else
+        printf("Neni prazdna\n");
+
+    if(game->getIsFieldEmpty(1,2))
+        printf("Je prazdna;\n");
+    else
+        printf("Neni prazdna\n");
+
+    if(game->getIsFieldEmpty(1,3))
+        printf("Je prazdna;\n");
+    else
+        printf("Neni prazdna\n");
+
+    if(game->getIsFieldEmpty(1,4))
+        printf("Je prazdna;\n");
+    else
+        printf("Neni prazdna\n");
+
+    if(game->getIsFieldEmpty(8,8))
+        printf("Je prazdna;\n");
+    else
+        printf("Neni prazdna\n");
+
     for (int i = 0; i < 77; ++i) {
         game->setPlaybackMovement();
         game->performPlaybackMovement();
@@ -124,6 +75,8 @@ int main(void)
     game->completeNotationMovement();
     game->nullMovementManager();
     game->changePlayer();
+
+    game->saveNotationToAnotherFile("C:\\Users\\Jozef\\Desktop\\notations\\subor4.txt");
 
     delete game;
 

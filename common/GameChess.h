@@ -40,6 +40,7 @@ public:
     ~GameChess();
     virtual int getFigureIDOnField(int col, int row);
     virtual bool getIsWhiteFigureOnField(int col, int row);
+    virtual bool getIsFieldEmpty(int col, int row);
     virtual int getStartFieldCol();
     virtual int getStartFieldRow();
     virtual int getGoalFieldCol();
@@ -71,6 +72,7 @@ public:
     virtual void setChangedFigureField();
     virtual void addPlayerNotationMovement();
     virtual bool saveNotation() ;
+    virtual bool saveNotationToAnotherFile(std::string path) ;
     virtual int getChangingFigureID();
     virtual void incrementIndexOfNotationLines();
     virtual void decrementIndexOfNotationLines();

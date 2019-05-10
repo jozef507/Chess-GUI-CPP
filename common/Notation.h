@@ -43,6 +43,7 @@ public:
     void processNotation();
     void addPlayerNotationMovement(FiguresManager *figuresManager, MovementManager *movementManager);
     bool saveNotation();
+    bool saveNotationToAnotherFile(std::string path);
     bool isFirstIndex();
     bool isLastIndex();
     std::vector<std::string> getGameNotationLines();

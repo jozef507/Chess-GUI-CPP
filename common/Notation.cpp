@@ -286,6 +286,26 @@ bool Notation::saveNotation()
     return true;
 }
 
+bool Notation::saveNotationToAnotherFile(std::string path)
+{
+    std::ofstream myfile;
+    myfile.open(path);
+    if(!myfile.is_open())
+    {
+        return false;
+    }
+
+    int length = (int)this->gameNotationLines.size();
+    std::string str;
+    for (int i = 0; i < length; ++i)
+    {
+        str = this->gameNotationLines.at(i);
+        myfile << str <<std::endl;
+    }
+    myfile.close();
+    return true;
+}
+
 bool Notation::isFirstIndex()
 {
     if(this->indexProcNotMov == 0)

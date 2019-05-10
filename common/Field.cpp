@@ -42,7 +42,7 @@ Field *Field::nextField(Direction dirs)
 
 bool Field::isEmpty()
 {
-    return this->figure == nullptr;
+    return (this->figure == nullptr);
 }
 
 Figure *Field::get()
