@@ -28,6 +28,7 @@ public:
     void moveFigure(int srcX, int srcY, int dstX, int dstY);
     void changeFigure(FigureType type, TeamColor color, int posX, int posY);
     void updateBoard();
+    void updatePosition(int posX, int posY);
 
 private:
     Ui::BoardWidget *ui;
@@ -42,11 +43,11 @@ private:
 
     QtGame* game;
 
+    QLabel* moveImg;
     QPoint moveFrom;
     bool moveByClick;
     bool moveByDrag;
     bool moveInvalid;
-    QLabel* moveImg;
 
     typedef std::vector<std::vector<QLabel*>> figureBuffer;
     figureBuffer figures;
@@ -55,6 +56,7 @@ private:
 
     void addFigure(FigureType type, TeamColor team, int posX, int posY);
     QPoint getFigureImgPosition(int x, int y);
+    QPoint getFigureBoardPosition(int x, int y);
 
     void mousePressEvent(QMouseEvent *event);
 

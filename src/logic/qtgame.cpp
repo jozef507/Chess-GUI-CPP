@@ -117,13 +117,15 @@ bool QtGame::nextPosition()
     {
         return false;
     }
+
     if (!gameLogic->performPlaybackMovement())
     {
         return false;
     }
 
-    gui->updateFigurePosition(gameLogic->getStartFieldCol(), gameLogic->getStartFieldRow(),
-                              gameLogic->getGoalFieldCol(), gameLogic->getGoalFieldRow());
+    // gui uses 0-based indexing
+    gui->updateFigurePosition(gameLogic->getStartFieldCol() - 1, gameLogic->getStartFieldRow() - 1,
+                              gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1);
 
     if(gameLogic->getIsChangingFigure())
     {
@@ -175,13 +177,17 @@ bool QtGame::previousPosition()
     {
         return false;
     }
+
     if (!gameLogic->performPlaybackUndoMovement())
     {
         return false;
     }
 
-    gui->updateFigurePosition(gameLogic->getStartFieldCol(), gameLogic->getStartFieldRow(),
-                              gameLogic->getGoalFieldCol(), gameLogic->getGoalFieldRow() );
+    // gui uses 0-based indexing
+    gui->updateFigurePosition(gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1,
+                              gameLogic->getStartFieldCol() - 1, gameLogic->getStartFieldRow() - 1 );
+
+    gui->updatePosition(gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1);
 
     gameLogic->decrementIndexOfNotationLines();
 
@@ -233,12 +239,14 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     {
         return false;
     }
+
     if (!gameLogic->performPlayerMovement())
     {
         return false;
     }
 
-    gui->updateFigurePosition(srcX, srcY, dstX, dstY);
+    // gui uses 0-based indexing
+    gui->updateFigurePosition(srcX - 1, srcY - 1, dstX - 1, dstY - 1);
 
     // Figure change
     if (gameLogic->getIsChangingFigure())
@@ -248,7 +256,8 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
         {
             return false;
         }
-        gui->changeFigureType(typeFromId(newFigureId), gameLogic->isWhiteOnTheMove() ? TeamColor::white : TeamColor::black, dstX, dstY);
+        // gui uses 0-based indexing
+        gui->changeFigureType(typeFromId(newFigureId), gameLogic->isWhiteOnTheMove() ? TeamColor::white : TeamColor::black, dstX - 1, dstY - 1);
     }
 
     gameLogic->addPlayerNotationMovement();

@@ -74,28 +74,28 @@
        <item row="0" column="2">
         <widget class="QPushButton" name="buttonNext">
          <property name="text">
-          <string>PushButton</string>
+          <string>Krok vpřed</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="buttonPrevious">
          <property name="text">
-          <string>PushButton</string>
+          <string>Krok zpět</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="buttonToFirst">
          <property name="text">
-          <string>PushButton</string>
+          <string>Na začátek</string>
          </property>
         </widget>
        </item>
        <item row="0" column="3">
         <widget class="QPushButton" name="buttonToLast">
          <property name="text">
-          <string>PushButton</string>
+          <string>Na konec</string>
          </property>
         </widget>
        </item>

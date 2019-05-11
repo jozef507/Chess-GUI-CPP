@@ -25,6 +25,7 @@ public:
 
     void updateFigurePosition(int srcX, int srcY, int dstX, int dstY);
     void changeFigureType(FigureType newType, TeamColor color, int posX, int posY);
+    void updatePosition(int posX, int posY);
     void updateBoard();
     void updateNotation(std::vector<std::string> notation, int index);
 

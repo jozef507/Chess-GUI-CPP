@@ -56,6 +56,11 @@ void ChessWidget::changeFigureType(FigureType newType, TeamColor color, int posX
     board->changeFigure(newType, color, posX, posY);
 }
 
+void ChessWidget::updatePosition(int posX, int posY)
+{
+    board->updatePosition(posX, posY);
+}
+
 void ChessWidget::updateBoard()
 {
     board->updateBoard();
@@ -125,7 +130,7 @@ void ChessWidget::saveFile(bool saveAs)
 
 void ChessWidget::on_buttonToFirst_clicked()
 {
-    game->setPosition(0);
+    while (game->previousPosition());
 }
 
 void ChessWidget::on_buttonPrevious_clicked()

@@ -8,10 +8,7 @@ BoardWidget::BoardWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scale = static_cast<double>(ui->boardLabel->width()) / 1000;
-
     figures = figureBuffer(8, std::vector<QLabel*>(8));
-
 }
 
 BoardWidget::~BoardWidget()
@@ -87,7 +84,13 @@ void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
     newFigure->setPixmap(img.scaled(newFigureSize, newFigureSize, Qt::KeepAspectRatio));
     newFigure->move(getFigureImgPosition(posX, posY));
 
-    figures[static_cast<unsigned long long>( posX )][static_cast<unsigned long long>( posY )] = newFigure;
+    unsigned long long X = static_cast<unsigned long long>(posX);
+    unsigned long long Y = static_cast<unsigned long long>(posY);
+
+    figures[X][Y] = newFigure;
+
+    // To fix figures disappearing when rezized
+    newFigure->show();
 }
 
 void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
@@ -101,6 +104,11 @@ void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
     X = static_cast<unsigned long long>(dstX);
     Y = static_cast<unsigned long long>(dstY);
 
+    if (figures[X][Y] != nullptr)
+    {
+        delete figures[X][Y];
+    }
+
     figures[X][Y] = figure;
 
     figure->move(getFigureImgPosition(dstX, dstY));
@@ -108,25 +116,64 @@ void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
 
 void BoardWidget::changeFigure(FigureType type, TeamColor color, int posX, int posY)
 {
+    unsigned long long X = static_cast<unsigned long long>(posX);
+    unsigned long long Y = static_cast<unsigned long long>(posY);
+
+    delete figures[X][Y];
+
     addFigure(type, color, posX, posY);
 }
 
 void BoardWidget::updateBoard()
 {
+    QPixmap newBoardPixmap(":/img/board.png");
+    ui->boardLabel->setPixmap(newBoardPixmap.scaled(ui->boardLabel->width(), ui->boardLabel->height(), Qt::KeepAspectRatio));
+
+    scale = static_cast<double>(ui->boardLabel->width()) / 1000;
+
     for (int x = 0; x < 8; x++) {
+        unsigned long long indexX = static_cast<unsigned long long>( x );
+
         for (int y = 0; y < 8; y++) {
-            unsigned long long indexX = static_cast<unsigned long long>( x );
             unsigned long long indexY = static_cast<unsigned long long>( y );
+
+            if (figures[indexX][indexY] != nullptr)
+            {
+                delete figures[indexX][indexY];
+                figures[indexX][indexY] = nullptr;
+            }
+
             if (game->isFieldEmpty(x, y))
             {
                 figures[indexX][indexY] = nullptr;
                 continue;
             }
+
             FigureType type = game->getFigureType(x, y);
             TeamColor color = game->getFigureColor(x, y);
 
             addFigure(type, color, x, y);
         }
+    }
+}
+
+void BoardWidget::updatePosition(int posX, int posY)
+{
+    unsigned long long X = static_cast<unsigned long long>(posX);
+    unsigned long long Y = static_cast<unsigned long long>(posY);
+
+    if (figures[X][Y] != nullptr)
+    {
+        delete figures[X][Y];
+        figures[X][Y] = nullptr;
+    }
+
+    if (!game->isFieldEmpty(posX, posY))
+    {
+        FigureType type = game->getFigureType(posX, posY);
+        TeamColor color = game->getFigureColor(posX, posY);
+
+        addFigure(type, color, posX, posY);
     }
 }
 
@@ -136,6 +183,14 @@ QPoint BoardWidget::getFigureImgPosition(int x, int y)
     int posY = static_cast<int>( ((boardSquareSize * (7 - y)) + boardBorderSize) * scale ); // 7 - y for reverse order of rows (7 on top down to 0 on bottom of chess-board)
 
     return QPoint (posX, posY);
+}
+
+QPoint BoardWidget::getFigureBoardPosition(int x, int y)
+{
+    int posX = static_cast<int>( (static_cast<double>( x ) / scale - boardBorderSize) / boardSquareSize );
+    int posY = 7 - static_cast<int>( (static_cast<double>( y ) / scale - boardBorderSize) / boardSquareSize );
+
+    return  QPoint(posX, posY);
 }
 
 int BoardWidget::heightForWidth(int w) const
@@ -148,50 +203,42 @@ void BoardWidget::resizeEvent(QResizeEvent* event)
     int newBoardSize = event->size().width() > event->size().height() ? event->size().height() : event->size().width();
     ui->boardLabel->resize(newBoardSize, newBoardSize);
 
-    scale = static_cast<double>(ui->boardLabel->width()) / boardSize;
-
-    int newFigureSize = static_cast<int>( figureSize * scale );
-
-    for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-            QLabel* figure = figures[static_cast<unsigned long long>( x )][static_cast<unsigned long long>( y )];
-            if (figure != nullptr)
-            {
-                figure->move(getFigureImgPosition(x, y));
-                figure->resize(newFigureSize, newFigureSize);
-
-                // TODO: img has to be reloaded from resources
-                figure->setPixmap(figure->pixmap()->scaled(newFigureSize, newFigureSize, Qt::KeepAspectRatio));
-            }
-        }
-    }
-
-    //QMessageBox::information(this, nullptr, "label size: " + QString::number(ui->boardLabel->width()) + "\nevent size: " + QString::number(event->size().width()), QMessageBox::Ok);
+    updateBoard();
 }
 
 void BoardWidget::mousePressEvent(QMouseEvent *event)
 {
-    return;
-    QPoint pos = getFigureImgPosition(event->x(), event->y());
+    QPoint pos = getFigureBoardPosition(event->x(), event->y());
 
     if (!moveByClick)
     {
         moveFrom = pos;
+
+        unsigned long long X = static_cast<unsigned long long>(pos.x());
+        unsigned long long Y = static_cast<unsigned long long>(pos.y());
+
+        moveImg = figures[X][Y];
     }
 }
 
 void BoardWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    return;
+    if (moveImg == nullptr)
+    {
+        moveInvalid = true;
+    }
+
     if (moveInvalid)
     {
+        moveImg = nullptr;
+
         moveByClick = false;
         moveByDrag = false;
         moveInvalid = false;
         return;
     }
 
-    QPoint pos = getFigureImgPosition(event->x(), event->y());
+    QPoint pos = getFigureBoardPosition(event->x(), event->y());
 
     if (!moveByDrag && !moveByClick)
     {
@@ -199,12 +246,17 @@ void BoardWidget::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
 
-    game->addMove(moveFrom.x(), moveFrom.y(), pos.x(), pos.y());
+    if (!game->addMove(moveFrom.x(), moveFrom.y(), pos.x(), pos.y()))
+    {
+        moveImg->move(getFigureImgPosition(moveFrom.x(), moveFrom.y()));
+    }
+
+    moveByClick = false;
+    moveByDrag = false;
 }
 
 void BoardWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    return;
     if (moveInvalid)
     {
         return;
@@ -217,12 +269,7 @@ void BoardWidget::mouseMoveEvent(QMouseEvent *event)
         return;
     }
 
-    if (!moveByDrag)
-    {
-        moveByDrag = true;
-
-        moveImg = figures[static_cast<unsigned long long>( moveFrom.x() )][static_cast<unsigned long long>( moveFrom.y() )];
-    }
+    moveByDrag = true;
 
     if (moveImg == nullptr)
     {
