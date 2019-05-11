@@ -6,6 +6,12 @@
 #include "FiguresManager.h"
 #include "cmath"
 
+
+/**
+ * Inicializacia dámy.
+ * @param isWhite Informacia o farbe.
+ * @param image Obrázok figúrky používaný v grafickom rozhraní.
+ */
 FigureQueen::FigureQueen(bool isWhite)
 {
     this->ID = 1;
@@ -16,27 +22,51 @@ FigureQueen::FigureQueen(bool isWhite)
 }
 
 
+/**
+ * Vracia informáciu o tom či je figúrka biela. Ak nie je čierna.
+ * @return Pravdivostna hodnota.
+ */
 bool FigureQueen::isWhiteF()
 {
     return this->isWhite;
 }
 
+
+/**
+ * Vráti pozíciu aktualnej pozície figúrky.
+ * @return Odkaz na políčko.
+ */
 Field *FigureQueen::getActualField()
 {
     return this->actField;
 }
 
+
+/**
+  * Nastaví aktuálnu pozíciu figúrky.
+  * @param field Políčko pozície na ktorú sa má figurka nastaviť.
+  */
 void FigureQueen::setActualPosition(Field *field)
 {
     this->actField = field;
 }
 
+
+/**
+* Vynulovanie/zrušenie aktualnej pozície figúrky.
+*/
 void FigureQueen::nulActualPosition()
 {
     this->actField = nullptr;
 }
 
 
+/**
+* Vykonáva ťah figúrky a zároveń testuje či je ťah možný.
+* @param moveTo Cieľove políčko ťahu.
+* @param figuresManager Manažer aktívnych figúrok.
+* @return Stav úspešnosti ťahu.
+*/
 int FigureQueen::move(Field *moveTo, FiguresManager *figuresManager)
 {
     if(this->actField == nullptr)
@@ -82,6 +112,16 @@ int FigureQueen::move(Field *moveTo, FiguresManager *figuresManager)
     return flag;
 }
 
+
+/**
+ * Testuje či je ťah na cieľove políčko možný.
+ * @param actCol Stlpec aktuálneho polička.
+ * @param actRow Riadok aktualneho políčka.
+ * @param moveTo Cieľové políčko.
+ * @param movetoCol Stlpec aktuálneho polička.
+ * @param movetoRow Riadok aktualneho políčka.
+ * @return Pravdivostná hodnota.
+ */
 bool FigureQueen::isMovementPossible(int actCol, int actRow, Field *moveTo, int movetoCol, int movetoRow)
 {
     int colDiff = std::abs(movetoCol-actCol);
@@ -158,6 +198,13 @@ bool FigureQueen::isMovementPossible(int actCol, int actRow, Field *moveTo, int 
     return true;
 }
 
+
+/**
+ * Skontroluje polička v danom smere, či sa tam nenachádza iná figúrka.
+ * @param dir Smer na šachovnici.
+ * @param diff Rozdiel políčok ktorý treba otestovať.
+ * @return Pravdivostna hodnota.
+ */
 bool FigureQueen::checkDirection(Field::Direction dir, int diff)
 {
     Field *nextField=this->actField;
@@ -171,6 +218,9 @@ bool FigureQueen::checkDirection(Field::Direction dir, int diff)
 }
 
 
+/**
+ * Nastaví pre figúrku všetky políčka ktoré táto figúrka ohrozuej.
+ */
 void FigureQueen::setFieldsInDanger()
 {
     this->fieldsInDanger.clear();
@@ -185,6 +235,11 @@ void FigureQueen::setFieldsInDanger()
     this->appendFieldsInDanger(Field::Direction::L);
 }
 
+
+/**
+  * Pridá polička v danom smere.
+  * @param dir Smer na šachovnici.
+ */
 void FigureQueen::appendFieldsInDanger(Field::Direction dir)
 {
     Field *nextField=this->actField->nextField(dir);
@@ -197,16 +252,32 @@ void FigureQueen::appendFieldsInDanger(Field::Direction dir)
     }
 }
 
+
+/**
+ * Vracia štruktúru políčok ktoré figúrka ohrozuje.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureQueen::getFieldsInDanger()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia id figúrky.
+ * @return ID figúrky.
+ */
 int FigureQueen::getID()
 {
     return this->ID;
 }
 
+
+/**
+ * Vráti štruktúru všetkych políčok smerujúcich k danému fieldu v parametri.
+ * @param field Odkaz na field.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureQueen::getFieldsOfDirectionToField(Field *field)
 {
     if(!(std::find(this->fieldsInDanger.begin(), this->fieldsInDanger.end(), field) != this->fieldsInDanger.end()))
@@ -218,19 +289,19 @@ std::vector<Field*> FigureQueen::getFieldsOfDirectionToField(Field *field)
     int rowDiff = field->getRowPos() - this->actField->getRowPos();
 
     Field::Direction dir;
-    if (colDiff>0 && rowDiff>0)
+    if (colDiff>0 && rowDiff==0)
         dir = Field::Direction::R;
-    else if (colDiff>0 && rowDiff<0)
+    else if (colDiff<0 && rowDiff==0)
         dir = Field::Direction::L;
-    else if (colDiff<0 && rowDiff>0)
+    else if (colDiff==0 && rowDiff>0)
         dir = Field::Direction::D;
-    else if (colDiff<0 && rowDiff<0)
+    else if (colDiff==0 && rowDiff<0)
         dir = Field::Direction::U;
-    else if (colDiff<0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
+    else if (colDiff>0 && rowDiff>0 && std::abs(colDiff) == std::abs(rowDiff))
         dir = Field::Direction::RU;
-    else if (colDiff<0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
+    else if (colDiff>0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
         dir = Field::Direction::RD;
-    else if (colDiff<0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
+    else if (colDiff<0 && rowDiff>0 && std::abs(colDiff) == std::abs(rowDiff))
         dir = Field::Direction::LU;
     else if (colDiff<0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
         dir = Field::Direction::LD;
@@ -251,11 +322,21 @@ std::vector<Field*> FigureQueen::getFieldsOfDirectionToField(Field *field)
     return fieldsOfDirToField;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže ohrozovať súperoveho kráľa.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureQueen::getFieldsForPossMov()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže figúrka vytvárať šachmat.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureQueen::getFieldsInDangerChesMat()
 {
     std::vector<Field*> tmp;
@@ -282,6 +363,11 @@ std::vector<Field*> FigureQueen::getFieldsInDangerChesMat()
     return tmp;
 }
 
+
+/**
+  * Pridá polička v danom smere.
+  * @param dir Smer na šachovnici.
+*/
 std::vector<Field*> FigureQueen::appendFieldsInDangerChessMat(Field::Direction dir)
 {
     std::vector<Field*> tmp;

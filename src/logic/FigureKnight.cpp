@@ -7,6 +7,12 @@
 #include "Field.h"
 #include "cmath"
 
+
+/**
+ * Inicializacia kráľa.
+ * @param isWhite Informacia o farbe.
+ * @param image Obrázok figúrky používaný v grafickom rozhraní.
+ */
 FigureKnight::FigureKnight(bool isWhite)
 {
     this->ID = 3;
@@ -16,27 +22,51 @@ FigureKnight::FigureKnight(bool isWhite)
 }
 
 
+/**
+ * Vracia informáciu o tom či je figúrka biela. Ak nie je čierna.
+ * @return Pravdivostna hodnota.
+ */
 bool FigureKnight::isWhiteF()
 {
     return this->isWhite;
 }
 
+
+/**
+ * Vráti pozíciu aktualnej pozície figúrky.
+ * @return Odkaz na políčko.
+ */
 Field *FigureKnight::getActualField()
 {
     return this->actField;
 }
 
+
+/**
+ * Nastaví aktuálnu pozíciu figúrky.
+ * @param field Políčko pozície na ktorú sa má figurka nastaviť.
+ */
 void FigureKnight::setActualPosition(Field *field)
 {
     this->actField = field;
 }
 
+
+/**
+ * Vynulovanie/zrušenie aktualnej pozície figúrky.
+ */
 void FigureKnight::nulActualPosition()
 {
     this->actField = nullptr;
 }
 
 
+/**
+ * Vykonáva ťah figúrky a zároveń testuje či je ťah možný.
+ * @param moveTo Cieľove políčko ťahu.
+ * @param figuresManager Manažer aktívnych figúrok.
+ * @return Stav úspešnosti ťahu.
+ */
 int FigureKnight::move(Field *moveTo, FiguresManager *figuresManager)
 {
     if(this->actField == nullptr)
@@ -81,6 +111,15 @@ int FigureKnight::move(Field *moveTo, FiguresManager *figuresManager)
     return flag;
 }
 
+/**
+ * Testuje či je ťah na cieľove políčko možný.
+ * @param actCol Stlpec aktuálneho polička.
+ * @param actRow Riadok aktualneho políčka.
+ * @param moveTo Cieľové políčko.
+ * @param movetoCol Stlpec aktuálneho polička.
+ * @param movetoRow Riadok aktualneho políčka.
+ * @return Pravdivostná hodnota.
+ */
 bool FigureKnight::isMovementPossible(int actCol, int actRow, Field *moveTo, int movetoCol, int movetoRow)
 {
     int colDiff = std::abs(movetoCol-actCol);
@@ -105,6 +144,9 @@ bool FigureKnight::isMovementPossible(int actCol, int actRow, Field *moveTo, int
 }
 
 
+/**
+ * Nastaví pre figúrku všetky políčka ktoré táto figúrka ohrozuej.
+ */
 void FigureKnight::setFieldsInDanger()
 {
     this->fieldsInDanger.clear();
@@ -174,16 +216,32 @@ void FigureKnight::setFieldsInDanger()
     }
 }
 
+
+/**
+ * Vracia štruktúru políčok ktoré figúrka ohrozuje.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureKnight::getFieldsInDanger()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia id figúrky.
+ * @return ID figúrky.
+ */
 int FigureKnight::getID()
 {
     return this->ID;
 }
 
+
+/**
+ * Vráti štruktúru všetkych políčok smerujúcich k danému fieldu v parametri.
+ * @param field Odkaz na field.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureKnight::getFieldsOfDirectionToField(Field *field)
 {
     if(!(std::find(this->fieldsInDanger.begin(), this->fieldsInDanger.end(), field) != this->fieldsInDanger.end()))
@@ -197,11 +255,21 @@ std::vector<Field*> FigureKnight::getFieldsOfDirectionToField(Field *field)
     return fieldsOfDirToField;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže ohrozovať súperoveho kráľa.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureKnight::getFieldsForPossMov()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže figúrka vytvárať šachmat.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureKnight::getFieldsInDangerChesMat()
 {
     return this->fieldsInDanger;

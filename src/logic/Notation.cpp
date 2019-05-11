@@ -1,8 +1,6 @@
 #include <utility>
 #include <iostream>
 
-#include <cctype>
-
 //
 // Created by Jozef on 4/24/2019.
 //
@@ -18,6 +16,10 @@
 #include <regex>
 
 
+/**
+* Inicializuje notáciu.
+* @param path Cesta k súboru s obsahom notácie.
+*/
 Notation::Notation(std::string path)
 {
     this->filePath = path;
@@ -42,6 +44,9 @@ Notation::Notation(std::string path)
         this->setWrongNotation();
 }
 
+/**
+ * Deštruktor.
+ */
 Notation::~Notation()
 {
     int length = this->notationMovements.size();
@@ -54,6 +59,11 @@ Notation::~Notation()
     }
 }
 
+
+/**
+ * Načíta riadky notácie zo súboru do vectoru pre zapis notacie.
+ * @return Úspešnosť operácie.
+ */
 bool Notation::getFileContent()
 {
     std::ifstream in(this->filePath);
@@ -78,6 +88,12 @@ bool Notation::getFileContent()
     return true;
 }
 
+
+/**
+* Prechádza celú notáciu zo súboru a postupne spracováva riadok za riadkom a ťah za ťahom.
+* Každý ťah konvertuje na inštanciu triedy NotationMovement ktorý reprezentuje jeden ťah zápisu.
+* Zneho sa vyberajú najdôležitejšie informacie o ťahu a to pri prehrávaní partii.
+*/
 void Notation::processNotation()
 {
     int lenght = (int)this->gameNotationLines.size();
@@ -134,23 +150,42 @@ void Notation::processNotation()
 }
 
 
+/**
+ * Vlastná funkcia pre odseknutie ľavých bielych znakov.
+ * @param s Reťazec pre osekanie.
+ */
 void Notation::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
         return !std::isspace(ch);
     }));
 }
 
+
+/**
+ * Vlastná funkcia pre odseknutie pravých bielych znakov.
+ * @param s Reťazec pre osekanie.
+ */
 void Notation::rtrim(std::string &s) {
     s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
         return !std::isspace(ch);
     }).base(), s.end());
 }
 
+
+/**
+ * Vlastná funkcia pre odseknutie bielych znakov z ľavej a pravej strany.
+ * @param s Reťazec pre osekanie.
+ */
 void Notation::trim(std::string &s) {
     ltrim(s);
     rtrim(s);
 }
 
+
+/**
+ * Odstraňuje z vectoru notacie riadky ktoré sú prázdne.
+ * @param vec Vector riadkov notácie.
+ */
 void Notation::removeSpaces(std::vector<std::string> &vec)
 {
     int length = (int)vec.size();
@@ -170,6 +205,13 @@ void Notation::removeSpaces(std::vector<std::string> &vec)
 }
 
 
+/**
+ * Rozdelí string podľa oddeľovača.
+ * @param txt Režazec na rozdelenie.
+ * @param strs Vector pre naplnenie oddelených častí.
+ * @param ch Oddeľovač
+ * @return Počet oddelenych elementov.
+ */
 size_t Notation::split(const std::string &txt, std::vector<std::string> &strs, char ch)
 {
     size_t pos = txt.find( ch );
@@ -188,6 +230,12 @@ size_t Notation::split(const std::string &txt, std::vector<std::string> &strs, c
 }
 
 
+/**
+* Pri vlastnom ťahu užívateľa táto metóda odstráni ďalšie už zbytočné ťahy z notácie
+* a prída ťah užívateľa v do tejto notácii.
+* @param figuresManager Manažer aktívnych/pasívnych figúrok.
+* @param movementManager Manažer ťahu.
+*/
 void Notation::addPlayerNotationMovement(FiguresManager *figuresManager, MovementManager *movementManager)
 {
     this->removeUselessNotMovs();
@@ -200,6 +248,10 @@ void Notation::addPlayerNotationMovement(FiguresManager *figuresManager, Movemen
     this->addNotMovToNotationLines(figuresManager, movementManager, mov);
 }
 
+
+/**
+ * Pomocná funkcia pre odstranenie všetkých už nepotrebných ťahov zo štrúktúry pre NotationMovements.
+ */
 void Notation::removeUselessNotMovs()
 {
     while(this->indexProcNotMov < (int)this->notationMovements.size())
@@ -210,6 +262,10 @@ void Notation::removeUselessNotMovs()
     }
 }
 
+
+/**
+ * Odstráni zo zápisu notácie (stringovo) už nepotrebne riadky tejto notácie.
+ */
 void Notation::removeUselessLines()
 {
     int linesIndex = (this->indexProcNotMov+1)/2;
@@ -239,6 +295,13 @@ void Notation::removeUselessLines()
     }
 }
 
+
+/**
+ * Pridá jeden ťah reprezentovaný NotationMovementom do zápisu notácie.
+ * @param figuresManager Manžer aktívnych/pasívnych figúrok.
+ * @param movementManager Manažer logického ťahu.
+ * @param mov Ťah notácie.
+ */
 void Notation::addNotMovToNotationLines(FiguresManager *figuresManager, MovementManager *movementManager,
                               NotationMovement *mov)
 {
@@ -268,6 +331,11 @@ void Notation::addNotMovToNotationLines(FiguresManager *figuresManager, Movement
     this->gameNotationLines.push_back(s);
 }
 
+
+/**
+ * Uloži notáciu do súboru z ktorého bola načítaná.
+ * @return Úspešnosť uloženia.
+ */
 bool Notation::saveNotation()
 {
     std::ofstream myfile;
@@ -288,6 +356,12 @@ bool Notation::saveNotation()
     return true;
 }
 
+
+/**
+    * Uloži notáciu do súboru zadanom v parametri funkcie.
+    * @param path Cesta k danému súboru.
+    * @return Úspešnosť uloženia.
+    */
 bool Notation::saveNotationToAnotherFile(std::string path)
 {
     std::ofstream myfile;
@@ -308,6 +382,12 @@ bool Notation::saveNotationToAnotherFile(std::string path)
     return true;
 }
 
+
+/**
+* Testuje či je index pre štruktúru ťahov notácie nulový ak áno znamena to že sme spracuvávame prvý prvok
+* štruktúry.
+* @return
+*/
 bool Notation::isFirstIndex()
 {
     if(this->indexProcNotMov == 0)
@@ -317,6 +397,10 @@ bool Notation::isFirstIndex()
 }
 
 
+/**
+* Testuje či je index pre štruktúru ťahov notácie poslený, či pracujeme s poslednym prvkom štruktúry.
+* @return
+*/
 bool Notation::isLastIndex()
 {
     if (this->indexProcNotMov == (int)this->notationMovements.size())
@@ -325,56 +409,111 @@ bool Notation::isLastIndex()
         return false;
 }
 
+
+/**
+* Vracia zápis notácie implementovanú riadok po riadku v štruktúre ArrayList.
+* @return Štruktúru notácie.
+*/
 std::vector<std::string> Notation::getGameNotationLines()
 {
     return this->gameNotationLines;
 }
 
+
+/**
+* Vracia index aktuálneho spracovaneho ťahu notácie ale prevedený na riadok notácie.
+* @return
+*/
 int Notation::getIndexProcNotMov()
 {
     return (this->indexProcNotMov-1)/2;
 }
 
+
+/**
+* Testovanie či je notácia prázdna.
+* @return Výsledok testu.
+*/
 bool Notation::getIsEmpty()
 {
     return this->isEmpty;
 }
 
+
+/**
+* Vráti inštanciu/objekt triedy NotationMovement pre ťah ktorý sa aktuálne spracúváva.
+* @return
+*/
 NotationMovement *Notation::getActualNotMov()
 {
     return this->notationMovements.at((unsigned long)(this->indexProcNotMov));
 }
 
+
+/**
+* Inkrementuje index určujúci aktuálny spracovávaný ťah notácie.
+*/
 void Notation::incrementIndexOfNotationLines()
 {
     this->indexProcNotMov++;
 }
 
+
+/**
+* Dekrementuje index určujúci aktuálny spracovávaný ťah notácie.
+*/
 void Notation::decrementIndexOfNotationLines()
 {
     this->indexProcNotMov--;
 }
 
+
+/**
+* Vráti ID figúrky ktorá má v danom ťahu vymeniť pešiaka.
+* @return Hodnota ID.
+*/
 int Notation::getChangingFigureID()
 {
     return this->getActualNotMov()->getChangingFigureID();
 }
 
+
+/**
+* Pri postupnom prehrávani/hraní partie táto metóda doplnňuje chýbajúce informácie do
+* aktuálneho ťahu notácie. (napríklad pri krátkom formáte notácie to je štartovacie políčko,
+* využívane neskôr pri kroku spať)
+* @param movementManager Manažer ťahu.
+*/
 void Notation::completeNotationMovement(MovementManager *movementManager)
 {
     this->notationMovements.at((unsigned long)this->indexProcNotMov-1)->completeNotationMovement(movementManager);
 }
 
+
+/**
+* Vracia inštanciu triedy NotationMovement pre ťah inštancie predchadzajúceho ťahu.
+* Využíívane pri kroku spať(undo).
+* @return
+*/
 NotationMovement *Notation::getPrevNotationMovement()
 {
     return this->notationMovements.at((unsigned long)this->indexProcNotMov-1);
 }
 
+
+/**
+* Vracia informáciu o tom či je formát notácie šachovej partie správny.
+* @return Pravdivostná hodnota.
+*/
 bool Notation::getIsRight ()
 {
     return this->isRight;
 }
 
+
+/**
+* Nastaví notáciu ako nesprávnu chybovou hláškou.
+*/
 void Notation::setWrongNotation()
 {
     this->gameNotationLines.clear();
