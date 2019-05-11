@@ -42,7 +42,7 @@ bool QtGame::isFieldEmpty(int posX, int posY)
     posX += 1;
     posY += 1;
 
-    return gameLogic->isFieldEmpty(posX, posY);
+    return gameLogic->getIsFieldEmpty(posX, posY);
 }
 
 FigureType QtGame::getFigureType(int posX, int posY)

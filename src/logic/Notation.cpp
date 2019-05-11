@@ -1,6 +1,8 @@
 #include <utility>
 #include <iostream>
 
+#include <cctype>
+
 //
 // Created by Jozef on 4/24/2019.
 //
