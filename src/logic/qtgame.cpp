@@ -19,21 +19,14 @@ QtGame::QtGame(GuiInterface* newGui, QString fileName)
     */
 }
 
-bool QtGame::setFile(QString fileName)
+bool QtGame::saveFile(std::string fileName)
 {
-    // set new filename for existing game
-    return false;
-}
+    if (fileName == "")
+    {
+        return gameLogic->saveNotation();
+    }
 
-QString QtGame::getFile()
-{
-    // get filename from game
-    return nullptr;
-}
-
-bool QtGame::saveFile()
-{
-    return gameLogic->saveNotation();
+    return gameLogic->saveNotationToAnotherFile(fileName);
 }
 
 TeamColor QtGame::getActivePlayer()
@@ -277,7 +270,7 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     std::vector<std::string> notation = gameLogic->getGameNotation();
     int notationIndex = gameLogic->getIndexOfGameNotation() + 1; // Proc +1 ??
 
-    gui->updateNotation(notation, notationIndex);
+    gui->updateNotation(notation, notationIndex, true);
 
     return true;
 }

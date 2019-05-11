@@ -104,11 +104,11 @@ void MainWindow::actualiseTabName()
     {
         if (game->getFileName() != nullptr)
         {
-            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), game->isSaved() ? game->getFileName() : "*" + game->getFileName());
+            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), game->getFileName());
         }
         else
         {
-            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), "*Nová Hra");
+            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), "Nová Hra");
         }
     }
 }

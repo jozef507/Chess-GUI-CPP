@@ -67,8 +67,14 @@ void ChessWidget::updateBoard()
 }
 
 #include <QMessageBox>
-void ChessWidget::updateNotation(std::vector<std::string> notation, int index)
+#include <QTabWidget>
+void ChessWidget::updateNotation(std::vector<std::string> notation, int index, bool changed)
 {
+    if (changed)
+    {
+        saved = false;
+    }
+
     QString S = "";
 
     int lineIndex = 0;
@@ -170,8 +176,6 @@ bool ChessWidget::loadFile()
 
     QTextStream* in = new QTextStream(file);
 
-    ui->textBrowser->setText(in->readAll());
-
     saved = true;
 
     return true;
@@ -192,7 +196,7 @@ void ChessWidget::saveFile(bool saveAs)
         fileName = newName;
     }
 
-    // TODO: Save File
+    game->saveFile(fileName.toUtf8().constData());
 
     saved = true;
 }

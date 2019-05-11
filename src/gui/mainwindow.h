@@ -15,6 +15,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void actualiseTabName();
+
 private slots:
     void on_actionNewGame_triggered();
 
@@ -34,8 +36,6 @@ private:
     void closeEvent (QCloseEvent *event);
 
     void addTab(QString fileName = "*Nová Hra");
-
-    void actualiseTabName();
 
     bool closeTab(int index, bool force = false);
 

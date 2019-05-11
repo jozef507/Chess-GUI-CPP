@@ -20,9 +20,7 @@ public:
     QtGame(GuiInterface* gui, QString fileName = nullptr);
     ~QtGame();
 
-    bool setFile(QString fileName);
-    QString getFile();
-    bool saveFile();
+    bool saveFile(std::string fileName = "");
 
     TeamColor getActivePlayer();
     bool isInitialPosition();
