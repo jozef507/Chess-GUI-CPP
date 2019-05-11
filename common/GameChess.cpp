@@ -260,22 +260,37 @@ bool GameChess::performPlaybackMovement()
         return false;
 
     if(this->movementManager->getIsRemovingFigure() != this->notation->getActualNotMov()->getIsFigureRemoving())
+    {
+        this->notation->setIsRight(false);
         return false;
+    }
 
     if((this->movementManager->getIsChangingFigure()))
     {
         if(this->notation->getActualNotMov()->getChangingFigureID() == -1)
+        {
+            this->notation->setIsRight(false);
             return false;
+        }
     }
     else
     {
         if(this->notation->getActualNotMov()->getChangingFigureID() != -1)
+        {
+            this->notation->setIsRight(false);
             return false;
+        }
     }
 
     if(this->figuresManager->getChessMat() != this->notation->getActualNotMov()->getIsChessMat())
+    {
         if(this->figuresManager->getChess() != this->notation->getActualNotMov()->getIsChess())
+        {
+            this->notation->setIsRight(false);
             return false;
+        }
+    }
+
 
     return true;
 }

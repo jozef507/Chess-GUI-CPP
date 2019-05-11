@@ -519,3 +519,8 @@ void Notation::setWrongNotation()
     this->gameNotationLines.clear();
     this->gameNotationLines.emplace_back("Chess notation is incorrect!");
 }
+
+void Notation::setIsRight(bool is)
+{
+    this->isRight = is;
+}

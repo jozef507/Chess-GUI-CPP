@@ -8,7 +8,7 @@ int main(void)
 {
 
 
-    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\notations\\subor5.txt");
+    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\notations\\fakeMat.txt");
 
     if(game->getIsFieldEmpty(1,1))
         printf("Je prazdna;\n");
@@ -35,7 +35,7 @@ int main(void)
     else
         printf("Neni prazdna\n");
 
-    for (int i = 0; i < /*77*/ 4; ++i) {
+    for (int i = 0; i < /*77*/ 41; ++i) {
         game->setPlaybackMovement();
         game->performPlaybackMovement();
         if(game->getIsChangingFigure())
@@ -49,17 +49,16 @@ int main(void)
     }
 
 
-    for (int i = 76; i >=76; --i) {
+    /*for (int i = 76; i >=76; --i) {
         game->setPlaybackUndoMovement();
         game->performPlaybackUndoMovement();
         game->decrementIndexOfNotationLines();
         game->nullMovementManager();
     }
-
-    game->setPlayerMovement(1,7);
-    game->setPlayerMovement(1,6);
+*/
+    game->setPlayerMovement(6,6);
+    game->setPlayerMovement(6,1);
     bool movement = game->performPlayerMovement();
-
     game->addPlayerNotationMovement();
     game->completeNotationMovement();
     game->nullMovementManager();

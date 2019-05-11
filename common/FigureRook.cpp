@@ -252,13 +252,13 @@ std::vector<Field*> FigureRook::getFieldsOfDirectionToField(Field *field)
 
 
     Field::Direction dir;
-    if (colDiff>0 && rowDiff>0)
+    if (colDiff>0 && rowDiff==0)
         dir = Field::Direction::R;
-    else if (colDiff>0 && rowDiff<0)
+    else if (colDiff<0 && rowDiff==0)
         dir = Field::Direction::L;
-    else if (colDiff<0 && rowDiff>0)
+    else if (colDiff==0 && rowDiff>0)
         dir = Field::Direction::U;
-    else if (colDiff<0 && rowDiff<0)
+    else if (colDiff==0 && rowDiff<0)
         dir = Field::Direction::D;
     else
         dir = Field::Direction::NONE;

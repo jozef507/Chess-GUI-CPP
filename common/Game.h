@@ -258,6 +258,7 @@ public:
      * @return Úspešnosť testu.
      */
     virtual bool isNotationRight() = 0;
+
 };
 
 

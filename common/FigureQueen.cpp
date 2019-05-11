@@ -294,9 +294,9 @@ std::vector<Field*> FigureQueen::getFieldsOfDirectionToField(Field *field)
     else if (colDiff<0 && rowDiff==0)
         dir = Field::Direction::L;
     else if (colDiff==0 && rowDiff>0)
-        dir = Field::Direction::D;
-    else if (colDiff==0 && rowDiff<0)
         dir = Field::Direction::U;
+    else if (colDiff==0 && rowDiff<0)
+        dir = Field::Direction::D;
     else if (colDiff>0 && rowDiff>0 && std::abs(colDiff) == std::abs(rowDiff))
         dir = Field::Direction::RU;
     else if (colDiff>0 && rowDiff<0 && std::abs(colDiff) == std::abs(rowDiff))
