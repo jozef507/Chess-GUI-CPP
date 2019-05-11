@@ -21,6 +21,7 @@ ChessWidget::ChessWidget(QWidget *parent) :
 
     game = new QtGame(this);
 
+    board->setGame(game);
 }
 
 ChessWidget::~ChessWidget()
