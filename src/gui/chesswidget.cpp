@@ -234,22 +234,23 @@ void ChessWidget::on_buttonToLast_clicked()
 
 void ChessWidget::on_textBrowser_cursorPositionChanged()
 {
-    QTextCursor C = ui->textBrowser->textCursor();
-    std::string S = ui->textBrowser->document()->toPlainText().toUtf8().constData();
+    int position = ui->textBrowser->textCursor().position();
+    std::string text = ui->textBrowser->document()->toPlainText().toUtf8().constData();
 
     int line = 0;
     int part = 0;
 
     int i = 0;
-    while (i < C.position())
+    while (i < position)
     {
-        if (S[static_cast<unsigned>( i )] == ' ')
+        if (text[static_cast<unsigned>( i )] == ' ')
         {
             part++;
         }
 
-        if (S[static_cast<unsigned>( i )] == '\n')
+        if (text[static_cast<unsigned>( i )] == '\n')
         {
+            part++;
             line++;
         }
 
@@ -264,6 +265,6 @@ void ChessWidget::on_textBrowser_cursorPositionChanged()
     }
 
     TeamColor player = part == 1 ? TeamColor::white : TeamColor::black;
-    int index = line + 1;
-    game->setPosition(index, player);
+
+    game->setPosition(line, player);
 }
