@@ -4,6 +4,8 @@
 #include "../gui/guiinterface.h"
 #include "../logic/QtGame.h"
 
+#include "../gui/chesstypes.h"
+
 class UI: public GuiInterface
 {
 public:
@@ -14,6 +16,8 @@ public:
 
 private:
     QtGame* game;
+
+    int typeToInt(FigureType type);
 
     int getNewFigureId();
 

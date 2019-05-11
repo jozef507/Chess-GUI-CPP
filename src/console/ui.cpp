@@ -15,46 +15,21 @@ UI::~UI()
 
 void UI::run()
 {
-    std::string in;
-    while(std::getline(std::cin, in, '\n'))
+    int x, y;
+    while (std::cin >> x >> y)
     {
-        if (in == "exit")
+        if (game->isFieldEmpty(x,y))
         {
-            exit(0);
+            std::cout << "Empty\n";
         }
         else
         {
-            std::cout << "Move: \n";
-            if (!game->addMove(1,2,1,3))
-            {
-                std::cout << "Fail!\n";
-            }
-            std::cout << "Done: \n";
+            std::cout << "Full\n";
 
-            std::cout << "Move: \n";
-            if (!game->addMove(8,7,8,5))
-            {
-                std::cout << "Fail!\n";
-            }
-            std::cout << "Done: \n";
-
-            std::cout << "Move: \n";
-            if (!game->addMove(1,3,1,4))
-            {
-                std::cout << "Fail!\n";
-            }
-            std::cout << "Done: \n";
-
-            std::cout << "Move: \n";
-            if (!game->addMove(8,8,8,6))
-            {
-                std::cout << "Fail!\n";
-            }
-            std::cout << "Done: \n";
-
-            continue;
+            std::cout << "Type " << typeToInt( game->getFigureType(x,y) ) << " color " << ( (game->getFigureColor(x,y) == TeamColor::white) ? "white" : "black" ) << " \n";
         }
     }
+
 }
 
 int UI::getNewFigureId()
@@ -147,7 +122,7 @@ void UI::updateFigurePosition(int srcX, int srcY, int dstX, int dstY)
  * 4 - rook
  * 5 - pawn
  */
-int typeToInt(FigureType type)
+int UI::typeToInt(FigureType type)
 {
     switch (type) {
     case FigureType::king:
