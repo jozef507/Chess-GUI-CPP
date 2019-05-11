@@ -36,6 +36,16 @@ bool QtGame::saveFile()
     return gameLogic->saveNotation();
 }
 
+TeamColor QtGame::getActivePlayer()
+{
+    return gameLogic->isWhiteOnTheMove() == true ? TeamColor::white : TeamColor::black;
+}
+
+bool QtGame::isInitialPosition()
+{
+    return gameLogic->isFirstIndexOfNotation();
+}
+
 bool QtGame::isFieldEmpty(int posX, int posY)
 {
     // Chessboard indexing correction

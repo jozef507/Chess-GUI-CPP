@@ -69,12 +69,75 @@ void ChessWidget::updateBoard()
 #include <QMessageBox>
 void ChessWidget::updateNotation(std::vector<std::string> notation, int index)
 {
-    QMessageBox::information(nullptr, "", std::to_string( index ).c_str() );
     QString S = "";
+
+    int lineIndex = 0;
+    int highlightStart = 0;
+    int highlightEnd = 0;
+
     for (auto line : notation) {
+        lineIndex++;
+
+        if (lineIndex == index)
+        {
+            // Position of next line
+            highlightStart = S.length();
+
+            // Skip after next space
+            unsigned i = 0;
+            bool secondPart = game->getActivePlayer() == TeamColor::white;
+            while (i < line.length())
+            {
+                highlightStart++;
+                if (line[i] == ' ')
+                {
+                    // Skip first part (white move) and continue to second (black move)
+                    if (secondPart){
+                        secondPart = false;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                i++;
+            }
+
+            highlightEnd = highlightStart;
+            i++;
+
+            while (i < line.length()) {
+                highlightEnd++;
+                if (line[i] == ' ')
+                {
+                    break;
+                }
+
+                i++;
+            }
+        }
+
         S += (line + "\n").c_str();
+
     }
+
     ui->textBrowser->setText(S);
+
+    // Highlight current move
+    if (game->isInitialPosition())
+    {
+        return;
+    }
+
+    QTextCharFormat highlight;
+    highlight.setBackground(Qt::gray);
+
+    QTextCursor cursor(ui->textBrowser->document());
+    cursor.setPosition(highlightStart, QTextCursor::MoveAnchor);
+    cursor.setPosition(highlightEnd, QTextCursor::KeepAnchor);
+
+    cursor.setCharFormat(highlight);
 }
 
 

@@ -277,7 +277,8 @@ void BoardWidget::mouseMoveEvent(QMouseEvent *event)
         return;
     }
 
-    QPoint newPos(event->x(), event->y());
+    int offset = static_cast<int>( (figureSize / 2) * scale );
+    QPoint newPos(event->x() - offset, event->y() - offset);
 
     moveImg->move(newPos);
 }
