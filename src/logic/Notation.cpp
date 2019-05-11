@@ -149,7 +149,7 @@ void Notation::processNotation()
     }
 }
 
-#include <cctype>
+
 /**
  * Vlastná funkcia pre odseknutie ľavých bielych znakov.
  * @param s Reťazec pre osekanie.
@@ -278,7 +278,7 @@ void Notation::removeUselessLines()
         this->gameNotationLines.pop_back();
     }
 
-    if(linesFlag==0 && linesToRemove!=0)
+    if(linesFlag==0 /*&& linesToRemove!=0*/)
     {
         std::string s = this->gameNotationLines.back();
         this->gameNotationLines.pop_back();
