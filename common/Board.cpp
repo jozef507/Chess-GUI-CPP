@@ -5,6 +5,11 @@
 #include "Board.h"
 #include "Figure.h"
 
+
+/**
+ * Inicializuje šachovnicu.
+ * @param size Počet riadov/stlpcov poličok šachovnice.
+ */
 Board::Board(int size)
 {
     this->board = new Field**[size];
@@ -37,6 +42,10 @@ Board::Board(int size)
     }
 }
 
+
+/**
+ * Deštruktor.
+ */
 Board::~Board()
 {
     for(int i = 0; i < 8; i++)
@@ -60,6 +69,11 @@ Board::~Board()
     delete[] this->board;
 }
 
+
+/**
+ * Vracia veľkosť šachovnice.
+ * @return Veľkosť šachovnice.
+ */
 int Board::getSize ()
 {
 
@@ -76,12 +90,28 @@ int Board::getSize ()
     }
 }
 
+
+/**
+ * Vracia odkaz na poličko (Field) na základe jeho pozície.
+ * @param col Stlpec pozície políčka.
+ * @param row Riadok pozície políčka.
+ * @return Odkaz na políčko(Field).
+ */
 Field *Board::getField(int col, int row)
 {
     Field *field = board[col-1][row-1];
     return field;
 }
 
+
+/**
+ * Vracia odkaz na susedné políčko políčka určeného jeho pozíciou.
+ * @param dirs Smer susedného políčka.
+ * @param col Stlpec pozície aktuálneho políčka.
+ * @param row Riadok pozície aktuálneho políčka.
+ * @param size Veľkosť šachovnice.
+ * @return Odkaz na susedné políčko (Field).
+ */
 Field *Board::chooseNextField(Field::Direction dirs, int col, int row, int size)
 {
     int nextCol, nextRow;
@@ -104,6 +134,12 @@ Field *Board::chooseNextField(Field::Direction dirs, int col, int row, int size)
     return tmp;
 }
 
+
+/**
+ * Vráti susedný stlpec na šachovnici.
+ * @param dirs Smer na šachovnici.
+ * @return Celočíselnu hodnotu o úspechu.
+ */
 int Board::getNextCol (Field::Direction dirs)
 {
     int newCol;
@@ -140,6 +176,12 @@ int Board::getNextCol (Field::Direction dirs)
     return newCol;
 }
 
+
+/**
+ * Vráti susedný riadok na šachovnici.
+ * @param dirs Smer na šachovnici.
+ * @return Celočíselnu hodnotu o úspechu.
+ */
 int Board::getNextRow (Field::Direction dirs)
 {
     int newRow;

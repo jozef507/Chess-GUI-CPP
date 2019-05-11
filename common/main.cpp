@@ -8,7 +8,7 @@ int main(void)
 {
 
 
-    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\notations\\subor2.txt");
+    Game *game = new GameChess("C:\\Users\\Jozef\\Desktop\\notations\\subor5.txt");
 
     if(game->getIsFieldEmpty(1,1))
         printf("Je prazdna;\n");
@@ -49,15 +49,23 @@ int main(void)
     }
 
 
-    for (int i = 76; i >=39; --i) {
+    for (int i = 76; i >=76; --i) {
         game->setPlaybackUndoMovement();
         game->performPlaybackUndoMovement();
         game->decrementIndexOfNotationLines();
         game->nullMovementManager();
     }
 
+    /*game->setPlayerMovement(5,8);
+    game->setPlayerMovement(5,7);
+    bool movement = game->performPlayerMovement();
 
-    game->setPlayerMovement(3,4);
+    game->addPlayerNotationMovement();
+    game->completeNotationMovement();
+    game->nullMovementManager();
+    game->changePlayer();*/
+
+    /*game->setPlayerMovement(3,4);
     game->setPlayerMovement(2,3);
     bool movement = game->performPlayerMovement();
 
@@ -75,7 +83,7 @@ int main(void)
     game->completeNotationMovement();
     game->nullMovementManager();
     game->changePlayer();
-
+*/
     game->saveNotationToAnotherFile("C:\\Users\\Jozef\\Desktop\\notations\\subor4.txt");
 
     delete game;

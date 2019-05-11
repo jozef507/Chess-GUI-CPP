@@ -7,6 +7,12 @@
 #include "FiguresManager.h"
 //#include "Figure.h"
 
+
+/**
+ * Inicializacia pešiaka.
+ * @param isWhite Informacia o farbe.
+ * @param image Obrázok figúrky používaný v grafickom rozhraní.
+ */
 FigurePawn::FigurePawn(bool isWhite)
 {
     this->ID = 5;
@@ -17,26 +23,51 @@ FigurePawn::FigurePawn(bool isWhite)
 }
 
 
+/**
+ * Vracia informáciu o tom či je figúrka biela. Ak nie je čierna.
+ * @return Pravdivostna hodnota.
+ */
 bool FigurePawn::isWhiteF()
 {
     return this->isWhite;
 }
 
+
+/**
+ * Vráti pozíciu aktualnej pozície figúrky.
+ * @return Odkaz na políčko.
+ */
 Field *FigurePawn::getActualField()
 {
     return this->actField;
 }
 
+
+/**
+ * Nastaví aktuálnu pozíciu figúrky.
+ * @param field Políčko pozície na ktorú sa má figurka nastaviť.
+ */
 void FigurePawn::setActualPosition(Field *field)
 {
     this->actField = field;
 }
 
+
+/**
+ * Vynulovanie/zrušenie aktualnej pozície figúrky.
+ */
 void FigurePawn::nulActualPosition()
 {
     this->actField = nullptr;
 }
 
+
+/**
+ * Vykonáva ťah figúrky a zároveń testuje či je ťah možný.
+ * @param moveTo Cieľove políčko ťahu.
+ * @param figuresManager Manažer aktívnych figúrok.
+ * @return Stav úspešnosti ťahu.
+ */
 int FigurePawn::move(Field *moveTo, FiguresManager *figuresManager)
 {
     if(this->actField == nullptr)
@@ -90,6 +121,16 @@ int FigurePawn::move(Field *moveTo, FiguresManager *figuresManager)
     return flag;
 }
 
+
+/**
+ * Testuje či je ťah na cieľove políčko možný.
+ * @param actCol Stlpec aktuálneho polička.
+ * @param actRow Riadok aktualneho políčka.
+ * @param moveTo Cieľové políčko.
+ * @param movetoCol Stlpec aktuálneho polička.
+ * @param movetoRow Riadok aktualneho políčka.
+ * @return Pravdivostná hodnota.
+ */
 bool FigurePawn::isMovementPossible(int actCol, int actRow, Field *moveTo, int movetoCol, int movetoRow)
 {
     int colDiff = std::abs(movetoCol-actCol);
@@ -180,7 +221,9 @@ bool FigurePawn::checkDirWithoutRemove(Field::Direction dir, int diff)
 }
 
 
-
+/**
+ * Nastaví pre figúrku všetky políčka ktoré táto figúrka ohrozuej.
+ */
 void FigurePawn::setFieldsInDanger()
 {
     this->fieldsInDanger.clear();
@@ -205,16 +248,32 @@ void FigurePawn::setFieldsInDanger()
     }
 }
 
+
+/**
+ * Vracia štruktúru políčok ktoré figúrka ohrozuje.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigurePawn::getFieldsInDanger()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia id figúrky.
+ * @return ID figúrky.
+ */
 int FigurePawn::getID()
 {
     return this->ID;
 }
 
+
+/**
+ * Vráti štruktúru všetkych políčok smerujúcich k danému fieldu v parametri.
+ * @param field Odkaz na field.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigurePawn::getFieldsOfDirectionToField(Field *field)
 {
     if(!(std::find(this->fieldsInDanger.begin(), this->fieldsInDanger.end(), field) != this->fieldsInDanger.end()))
@@ -244,6 +303,11 @@ bool FigurePawn::isOnTheLastField()
     return false;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže ohrozovať súperoveho kráľa.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigurePawn::getFieldsForPossMov()
 {
     std::vector<Field*> tmp;
@@ -305,6 +369,11 @@ std::vector<Field*> FigurePawn::getFieldsForPossMov()
     return tmp;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže figúrka vytvárať šachmat.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigurePawn::getFieldsInDangerChesMat()
 {
     return this->fieldsInDanger;

@@ -12,6 +12,10 @@
 #include <regex>
 #include <stdio.h>
 
+
+/**
+ * Inicializuje ťah notácie.
+ */
 NotationMovement::NotationMovement()
 {
     this->startFieldCol = -1;
@@ -22,6 +26,13 @@ NotationMovement::NotationMovement()
     this->changingFigureID = -1;
 }
 
+
+/**
+* Nastaví ťah notácie z uživateľoveho ťahu. Je to dôležite pre budúce volanie ťahov spať.
+* @param isLongNotation Informacia či ide o krátku/dlhú formu zápisu.
+* @param figuresManager Manažer aktivných/pasívnych figúrok.
+* @param movementManager Manažer realneo ťahu.
+*/
 void NotationMovement::setNotationMovementFromUserMov(bool isLongNotation, FiguresManager *figuresManager, MovementManager *movementManager)
 {
     this->isLongNotation = isLongNotation;
@@ -40,6 +51,12 @@ void NotationMovement::setNotationMovementFromUserMov(bool isLongNotation, Figur
         this->isChess = figuresManager->getChess();
 }
 
+
+/**
+ * Nastavuje ťah notácie zo zápisu z notácie.
+ * @param s Reťazec zápisu ťahu.
+ * @return Úspešnosť operácie.
+ */
 bool NotationMovement::setNotationMovementFromString(std::string s)
 {
     if(std::regex_match(s, std::regex("[KDVSJ]?[abcdefgh][12345678][x]?[abcdefgh][12345678][VDSJ]?[+#]?")))
@@ -257,6 +274,12 @@ bool NotationMovement::setNotationMovementFromString(std::string s)
     return true;
 }
 
+
+/**
+ * Vráti ID typu figúrky zo stringoveho označenia figúrky.
+ * @param s Označenie figúrky.
+ * @return ID figúrky.
+ */
 int NotationMovement::getFigureID(std::string s)
 {
     if (s.compare("")==0)
@@ -279,6 +302,11 @@ int NotationMovement::getFigureID(std::string s)
 }
 
 
+/**
+ * Vratia stringove označenie figúrky z ID figúrky.
+ * @param id ID figúrky.
+ * @return Označenie figúrky.
+ */
 std::string NotationMovement::getStrFigureID(int id)
 {
     if (id==0)
@@ -297,6 +325,12 @@ std::string NotationMovement::getStrFigureID(int id)
         return nullptr;
 }
 
+
+/**
+ * Vráti poradie stlpca políčka na šachovnici.
+ * @param s Označenie stlpca.
+ * @return Poradie stlpca.
+ */
 int NotationMovement::getIntFieldColumn(std::string s)
 {
     if (s.compare("")==0)
@@ -321,6 +355,13 @@ int NotationMovement::getIntFieldColumn(std::string s)
     else
         return -1;
 }
+
+
+/**
+ * Vráti označenie stlpca políčka z jeho poradia označenia.
+ * @param i Poradie stlpca.
+ * @return Označenie stlpca.
+ */
 std::string  NotationMovement::getStrFieldColumn(int i)
 {
     if (i==1)
@@ -343,11 +384,24 @@ std::string  NotationMovement::getStrFieldColumn(int i)
         return nullptr;
 }
 
+
+/**
+ * Vracia infomáciu o tom či ide o dlhý zápis ťahu v notácii.
+ * @return Pravdivostna hodnota.
+ */
 bool NotationMovement::getIsLongNotation()
 {
     return this->isLongNotation;
 }
 
+
+/**
+ * Vygeneruje string/zapis ťahu z tohto ťahu notácie.
+ * @param activeFigures Aktívne figúrky na šachovnici - štruktúra.
+ * @param movementFigure Posúvacia figúrka.
+ * @param startFieldOfMovementFig Štartovacie políčko ťahu.
+ * @return Vygenerovaný string.
+ */
 std::string NotationMovement::getGeneratedStrOfNotMov(std::vector<Figure*> activeFigures, Figure *movementFigure, Field *startFieldOfMovementFig)
 {
     std::string s = "";
@@ -408,51 +462,101 @@ std::string NotationMovement::getGeneratedStrOfNotMov(std::vector<Figure*> activ
     return s;
 }
 
+
+/**
+ * Vracia stlpec štartovaciaho políčka.
+ * @return
+ */
 int NotationMovement::getStartFieldCol()
 {
     return this->startFieldCol;
 }
 
+
+/**
+ * Vracia riadok štartovaciaho políčka.
+ * @return
+ */
 int NotationMovement::getStartFieldRow()
 {
     return this->startFieldRow;
 }
 
+
+/**
+ * Vracia stlpec cieľoveho políčka.
+ * @return
+ */
 int NotationMovement::getGoalFieldCol()
 {
     return this->goalFieldCol;
 }
 
+
+/**
+ * Vracia riadok cieľoveho políčka.
+ * @return
+ */
 int NotationMovement::getGoalFieldRow()
 {
     return this->goalFieldRow;
 }
 
+
+/**
+ * Vracia ID figúrky kotorá je pri ťahu posúvaná.
+ * @return ID figúrky.
+ */
 int NotationMovement::getMovementFigureID()
 {
     return this->movementFigureID;
 }
 
+
+/**
+ * Vracia ID figúrky kotorá je zamenená za pešiaka.
+ * @return ID figúrky.
+ */
 int NotationMovement::getChangingFigureID()
 {
     return this->changingFigureID;
 }
 
+
+/**
+ * Vracia ID figúrky kotorá je vyhodená.
+ * @return ID figúrky.
+ */
 bool NotationMovement::getIsFigureRemoving()
 {
     return this->isFigureRemoving;
 }
 
+
+/**
+ * Vráti informáciu o tom či je v tomto ťahu šach.
+ * @return Pravdivostna hodnota.
+ */
 bool NotationMovement::getIsChess()
 {
     return this->isChess;
 }
 
+
+/**
+ * Vráti informáciu o tom či je v tomto ťahu šachmat.
+ * @return Pravdivostna hodnota.
+ */
 bool NotationMovement::getIsChessMat()
 {
     return this->isChessMat;
 }
 
+
+/**
+ * Zkompletuje ťah notácie z ťahu užívateľa.
+ * @param movementManager Manážer realneho ťahu.
+ */
 void NotationMovement::completeNotationMovement(MovementManager *movementManager)
 {
     if(this->startFieldCol == -1)

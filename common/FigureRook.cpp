@@ -7,7 +7,11 @@
 #include "FiguresManager.h"
 
 
-
+/**
+ * Inicializacia veže.
+ * @param isWhite Informacia o farbe.
+ * @param image Obrázok figúrky používaný v grafickom rozhraní.
+ */
 FigureRook::FigureRook(bool isWhite)
 {
     this->ID  = 4;
@@ -17,27 +21,51 @@ FigureRook::FigureRook(bool isWhite)
 }
 
 
+/**
+ * Vracia informáciu o tom či je figúrka biela. Ak nie je čierna.
+ * @return Pravdivostna hodnota.
+ */
 bool FigureRook::isWhiteF()
 {
     return this->isWhite;
 }
 
+
+/**
+ * Vráti pozíciu aktualnej pozície figúrky.
+ * @return Odkaz na políčko.
+ */
 Field *FigureRook::getActualField()
 {
     return this->actField;
 }
 
+
+/**
+ * Nastaví aktuálnu pozíciu figúrky.
+ * @param field Políčko pozície na ktorú sa má figurka nastaviť.
+ */
 void FigureRook::setActualPosition(Field *field)
 {
     this->actField = field;
 }
 
+
+/**
+ * Vynulovanie/zrušenie aktualnej pozície figúrky.
+ */
 void FigureRook::nulActualPosition()
 {
     this->actField = nullptr;
 }
 
 
+/**
+  * Vykonáva ťah figúrky a zároveń testuje či je ťah možný.
+  * @param moveTo Cieľove políčko ťahu.
+  * @param figuresManager Manažer aktívnych figúrok.
+  * @return Stav úspešnosti ťahu.
+  */
 int FigureRook::move(Field *moveTo, FiguresManager *figuresManager)
 {
     if(this->actField == nullptr)
@@ -82,6 +110,16 @@ int FigureRook::move(Field *moveTo, FiguresManager *figuresManager)
     return flag;
 }
 
+
+/**
+     * Testuje či je ťah na cieľove políčko možný.
+     * @param actCol Stlpec aktuálneho polička.
+     * @param actRow Riadok aktualneho políčka.
+     * @param moveTo Cieľové políčko.
+     * @param movetoCol Stlpec aktuálneho polička.
+     * @param movetoRow Riadok aktualneho políčka.
+     * @return Pravdivostná hodnota.
+     */
 bool FigureRook::isMovementPossible(int actCol, int actRow, Field *moveTo, int movetoCol, int movetoRow)
 {
     int colDiff = std::abs(movetoCol-actCol);
@@ -128,6 +166,13 @@ bool FigureRook::isMovementPossible(int actCol, int actRow, Field *moveTo, int m
     return true;
 }
 
+
+/**
+    * Skontroluje polička v danom smere, či sa tam nenachádza iná figúrka.
+    * @param dir Smer na šachovnici.
+    * @param diff Rozdiel políčok ktorý treba otestovať.
+    * @return Pravdivostna hodnota.
+    */
 bool FigureRook::checkDirection(Field::Direction dir, int diff)
 {
     Field *nextField=this->actField;
@@ -140,7 +185,9 @@ bool FigureRook::checkDirection(Field::Direction dir, int diff)
     return true;
 }
 
-
+/**
+ * Nastaví pre figúrku všetky políčka ktoré táto figúrka ohrozuej.
+ */
 void FigureRook::setFieldsInDanger()
 {
     this->fieldsInDanger.clear();
@@ -150,6 +197,11 @@ void FigureRook::setFieldsInDanger()
     this->appendFieldsInDanger(Field::Direction::L);
 }
 
+
+/**
+  * Pridá polička v danom smere.
+  * @param dir Smer na šachovnici.
+ */
 void FigureRook::appendFieldsInDanger(Field::Direction dir)
 {
     Field *nextField=this->actField->nextField(dir);
@@ -162,16 +214,32 @@ void FigureRook::appendFieldsInDanger(Field::Direction dir)
     }
 }
 
+
+/**
+ * Vracia štruktúru políčok ktoré figúrka ohrozuje.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureRook::getFieldsInDanger()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia id figúrky.
+ * @return ID figúrky.
+ */
 int FigureRook::getID()
 {
     return this->ID;
 }
 
+
+/**
+ * Vráti štruktúru všetkych políčok smerujúcich k danému fieldu v parametri.
+ * @param field Odkaz na field.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureRook::getFieldsOfDirectionToField(Field *field)
 {
     if(!(std::find(this->fieldsInDanger.begin(), this->fieldsInDanger.end(), field) != this->fieldsInDanger.end()))
@@ -209,11 +277,21 @@ std::vector<Field*> FigureRook::getFieldsOfDirectionToField(Field *field)
     return fieldsOfDirToField;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže ohrozovať súperoveho kráľa.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureRook::getFieldsForPossMov()
 {
     return this->fieldsInDanger;
 }
 
+
+/**
+ * Vracia štruktúru všetkých políčok ktorými môže figúrka vytvárať šachmat.
+ * @return Štruktúra políčok.
+ */
 std::vector<Field*> FigureRook::getFieldsInDangerChesMat()
 {
     std::vector<Field*> tmp;
@@ -231,6 +309,10 @@ std::vector<Field*> FigureRook::getFieldsInDangerChesMat()
     return tmp;
 }
 
+/**
+* Pridá polička v danom smere.
+* @param dir Smer na šachovnici.
+*/
 std::vector<Field*> FigureRook::appendFieldsInDangerChessMat(Field::Direction dir)
 {
     std::vector<Field*> tmp;

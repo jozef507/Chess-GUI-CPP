@@ -6,11 +6,17 @@
 #include "Figure.h"
 #include "FigureKing.h"
 
+/**
+ * Inicializace objektu.
+ */
 FiguresManager::FiguresManager()
 {
     this->chessMat = false;
 }
 
+/**
+ * Deštruktor.
+ */
 FiguresManager:: ~FiguresManager()
 {
     int length = this->activeWhiteFigures.size();
@@ -50,6 +56,16 @@ FiguresManager:: ~FiguresManager()
     }
 }
 
+
+/**
+ * Základná metoda tejto triedy, volaná po uskutočnení každého ťahu. Jej úlohou je aktualizovať
+ * štruktúry aktívnych/pasívnych figúrok ale najmä aktualizovať štruktúry pre políčka v ohrození požívajuce
+ * sa na detekciu šachu a šachmatu.
+ * @param whiteOnTheMove Informácia o tom ktorý hráč je na ťahu.
+ * @param movingFigure Odkaz na figúrku ktorá sa pri ťahu presúva.
+ * @param removedFigure Odkaz na figúrku ktorý bola vyhodená.
+ * @return Úspešnosť operácie.
+ */
 bool FiguresManager::updateFigures(bool whiteOnTheMove, Figure *movingFigure, Figure *removedFigure)
 {
     std::vector<Figure*> tmpActiveWhiteFigures(this->activeWhiteFigures);
@@ -103,6 +119,11 @@ bool FiguresManager::updateFigures(bool whiteOnTheMove, Figure *movingFigure, Fi
 
 }
 
+
+/**
+ * Pridá figúrku figure do štruktúry aktívnych figúrok podľa jej farby.
+ * @param figure
+ */
 void FiguresManager::addActiveFigure(Figure *figure)
 {
     if (figure->isWhiteF())
@@ -111,6 +132,11 @@ void FiguresManager::addActiveFigure(Figure *figure)
         this->activeBlackFigures.push_back(figure);
 }
 
+
+/**
+ * Pridá vyhodenú figúrku figure do štruktúry pre vyhodené figúrky.
+ * @param figure
+ */
 void FiguresManager::addRemovedFigure(Figure *figure)
 {
     if (figure->isWhiteF())
@@ -131,6 +157,11 @@ void FiguresManager::addRemovedFigure(Figure *figure)
     }
 }
 
+
+/**
+  * Pridá zamenenú figúruku(pešiaka) figure do štruktúry pre zamenené figúrky.
+  * @param figure
+  */
 void FiguresManager::addChangedFigure(Figure *figure)
 {
     if (figure->isWhiteF())
@@ -151,6 +182,10 @@ void FiguresManager::addChangedFigure(Figure *figure)
     }
 }
 
+
+/**
+ * Nastaví/aktualizuje štruktúru ohrozených políčok bielymi figúrkami.
+ */
 void FiguresManager::setWhiteFieldsInDanger()
 {
     this->whiteFieldsInDanger.clear();
@@ -165,6 +200,10 @@ void FiguresManager::setWhiteFieldsInDanger()
     }
 }
 
+
+/**
+ * Nastaví/aktualizuje štruktúru ohrozených políčok čiernymi figúrkami.
+ */
 void FiguresManager::setBlackFieldsInDanger()
 {
     this->blackFieldsInDanger.clear();
@@ -179,6 +218,11 @@ void FiguresManager::setBlackFieldsInDanger()
     }
 }
 
+
+/**
+ * Nastaví/aktualizuje štruktúru ohrozených políčok bielymi figúrkami okrem bieleho kráľa.
+ * @return
+ */
 std::vector<Field*> FiguresManager::getWhiteFieldsInDangerWithoutKing()
 {
     std::vector<Field*> whiteFieldsInDangerWithoutKing;
@@ -198,6 +242,11 @@ std::vector<Field*> FiguresManager::getWhiteFieldsInDangerWithoutKing()
     return whiteFieldsInDangerWithoutKing;
 }
 
+
+/**
+* Nastaví/aktualizuje štruktúru ohrozených políčok čiernymi figúrkami okrem čierneho kráľa.
+* @return
+*/
 std::vector<Field*> FiguresManager::getBlackFieldsInDangerWithoutKing()
 {
     std::vector<Field*> blackFieldsInDangerWithoutKing;
@@ -217,6 +266,13 @@ std::vector<Field*> FiguresManager::getBlackFieldsInDangerWithoutKing()
     return blackFieldsInDangerWithoutKing;
 }
 
+
+/**
+ * Metóda kontroluje či je prítomny na šachovnici šach.
+ * @param isWhiteOnTheMove Hrač na ťahu.
+ * @param movingFigure Presúvaná figúrka.
+ * @return Výsledok kontroly.
+ */
 bool FiguresManager::checkChess(Figure *movingFigure)
 {
     Field *kingFieldBlack = this->blackKing->getActualField();
@@ -248,6 +304,12 @@ bool FiguresManager::checkChess(Figure *movingFigure)
     return false;
 }
 
+
+/**
+ * Metóda kontroluje či momentálny stav na šachovnici nespôsobuje šach mat.
+ * @param isWhiteOnTheMove Hráč na ťahu.
+ * @return Výsledok kotnroly.
+ */
 bool FiguresManager::checkChessMat(bool isWhiteOnTheMove)
 {
     if(isWhiteOnTheMove)
@@ -388,6 +450,11 @@ bool FiguresManager::checkChessMat(bool isWhiteOnTheMove)
     }
 }
 
+
+/**
+ * Nastaví člena/premennu tejto triedy kráľa na kráľa daného parametrom.
+ * @param king Kráľ ktorý má byť priradený objektu.
+ */
 void FiguresManager::setKing(FigureKing *king)
 {
     if(king->isWhiteF())
@@ -400,47 +467,90 @@ void FiguresManager::setKing(FigureKing *king)
     }
 }
 
+
+/**
+ * Vracia informáciu o tom či je na šachovnici stav - šachmat.
+ * @return Pravdivostná hodnota.
+ */
 bool FiguresManager::getChess()
 {
     return  this->whiteKing->getInChess() || this->blackKing->getInChess();
 }
 
+
+/**
+ * Vracia informáciu o tom či je na šachovnici stav - šachmat.
+ * @return Pravdivostná hodnota.
+ */
 bool FiguresManager::getChessMat()
 {
     return this->chessMat;
 }
 
+
+/**
+  * Vráti poslednú figúrku priradenú do štruktúry - zamenené figúrky.
+  * @return Odkaz na figúrku.
+  */
 Figure *FiguresManager::getLastChangedFigure ()
 {
     return this->changedFigures.back();
 }
 
+
+/**
+ * Odstráni poseldnú figúrku zo štruktúry - zamenené figúrky.
+ */
 void FiguresManager::removeLastChangedFigure ()
 {
     this->changedFigures.pop_back();
 }
 
+
+/**
+ * Vráti štruktúru aktívnych bielych figúrok.
+ * @return Štruktúru figúrok.
+ */
 std::vector<Figure*> FiguresManager::getActiveWhiteFigures ()
 {
     return this->activeWhiteFigures;
 }
 
+
+/**
+ * Vráti štruktúru aktívnych čiernych figúrok.
+ * @return Štruktúru figúrok.
+ */
 std::vector<Figure*> FiguresManager::getActiveBlackFigures ()
 {
     return this->activeBlackFigures;
 }
 
+
+/**
+ * Vráti poslednú figúrku priradenú do štruktúry - vyhodené figúrky.
+ * @return Odkaz na figúrku.
+ */
 Figure *FiguresManager::getLastRemovedFigure()
 {
     return this->removedFigures.back();
 }
 
+
+/**
+ * Odstráni poseldnú figúrku zo štruktúry - vyhodené figúrky.
+ */
 void FiguresManager::removeLastRemovedFigure()
 {
     this->removedFigures.pop_back();
 
 }
 
+
+/**
+ * Odstráni z aktívnych figúrok figurkú danú parametrom.
+ * @param figure Odkaz na danú figúrku.
+ */
 void FiguresManager::removeActiveFigure(Figure *figure)
 {
     if(figure->isWhiteF())
@@ -449,6 +559,11 @@ void FiguresManager::removeActiveFigure(Figure *figure)
         this->activeBlackFigures.erase(std::remove(this->activeBlackFigures.begin(), this->activeBlackFigures.end(), figure), this->activeBlackFigures.end());;
 }
 
+
+/**
+ * Nastaví člena tiredy šachmat podľa daného parametru.
+ * @param is Pravdivostná hotnota.
+ */
 void FiguresManager::setChessMat(bool is)
 {
     this->chessMat = is;
