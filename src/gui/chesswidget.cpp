@@ -66,9 +66,15 @@ void ChessWidget::updateBoard()
     board->updateBoard();
 }
 
+#include <QMessageBox>
 void ChessWidget::updateNotation(std::vector<std::string> notation, int index)
 {
-    // TODO:
+    QMessageBox::information(nullptr, "", std::to_string( index ).c_str() );
+    QString S = "";
+    for (auto line : notation) {
+        S += (line + "\n").c_str();
+    }
+    ui->textBrowser->setText(S);
 }
 
 
