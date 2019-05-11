@@ -35,7 +35,7 @@ int main(void)
     else
         printf("Neni prazdna\n");
 
-    for (int i = 0; i < 77; ++i) {
+    for (int i = 0; i < /*77*/ 4; ++i) {
         game->setPlaybackMovement();
         game->performPlaybackMovement();
         if(game->getIsChangingFigure())
@@ -56,14 +56,23 @@ int main(void)
         game->nullMovementManager();
     }
 
-    /*game->setPlayerMovement(5,8);
-    game->setPlayerMovement(5,7);
+    game->setPlayerMovement(1,7);
+    game->setPlayerMovement(1,6);
     bool movement = game->performPlayerMovement();
 
     game->addPlayerNotationMovement();
     game->completeNotationMovement();
     game->nullMovementManager();
-    game->changePlayer();*/
+    game->changePlayer();
+
+    game->setPlayerMovement(1,2);
+    game->setPlayerMovement(1,3);
+    movement = game->performPlayerMovement();
+
+    game->addPlayerNotationMovement();
+    game->completeNotationMovement();
+    game->nullMovementManager();
+    game->changePlayer();
 
     /*game->setPlayerMovement(3,4);
     game->setPlayerMovement(2,3);
