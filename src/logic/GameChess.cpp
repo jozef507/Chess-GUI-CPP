@@ -303,6 +303,11 @@ bool GameChess::saveNotation()
     return this->notation->saveNotation();
 }
 
+bool GameChess::saveNotationToAnotherFile(std::string path)
+{
+    return this->notation->saveNotationToAnotherFile(path);
+}
+
 int GameChess::getChangingFigureID()
 {
     return this->notation->getChangingFigureID();
@@ -348,11 +353,6 @@ bool GameChess::isNotationRight()
 //TODO - delete this function
 Field *GameChess::getField(int col, int row) { return this->board->getField(col, row);}
 
-bool GameChess::isFieldEmpty(int col, int row)
-{
-    return board->getField(col, row)->isEmpty();
-}
-
 int GameChess::getFigureIDOnField(int col, int row)
 {
     return this->board->getField(col, row)->get()->getID();
@@ -383,4 +383,9 @@ int GameChess::getGoalFieldRow()
 {
     return this->movementManager->getGoalField()->getRowPos();
 
+}
+
+bool GameChess::getIsFieldEmpty(int col, int row)
+{
+    return this->board->getField(col, row)->isEmpty();
 }

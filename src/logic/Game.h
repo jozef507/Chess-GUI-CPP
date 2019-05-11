@@ -14,9 +14,9 @@ class Game
 {
 public:
     virtual ~Game()= default;
-    virtual bool isFieldEmpty(int col, int row) = 0;
     virtual int getFigureIDOnField(int col, int row) = 0;
     virtual bool getIsWhiteFigureOnField(int col, int row) = 0;
+    virtual bool getIsFieldEmpty(int col, int row) = 0;
     virtual int getStartFieldCol() = 0;
     virtual int getStartFieldRow() = 0;
     virtual int getGoalFieldCol() = 0;
@@ -49,6 +49,7 @@ public:
     virtual void setChangedFigureField() = 0;
     virtual void addPlayerNotationMovement() = 0;
     virtual bool saveNotation() = 0 ;
+    virtual bool saveNotationToAnotherFile(std::string path) = 0;
     virtual int getChangingFigureID() = 0;
     virtual void incrementIndexOfNotationLines() = 0;
     virtual void decrementIndexOfNotationLines() = 0;

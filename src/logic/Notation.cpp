@@ -14,7 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
-#include <cctype>
+
 
 Notation::Notation(std::string path)
 {
@@ -270,6 +270,26 @@ bool Notation::saveNotation()
 {
     std::ofstream myfile;
     myfile.open(this->filePath);
+    if(!myfile.is_open())
+    {
+        return false;
+    }
+
+    int length = (int)this->gameNotationLines.size();
+    std::string str;
+    for (int i = 0; i < length; ++i)
+    {
+        str = this->gameNotationLines.at(i);
+        myfile << str <<std::endl;
+    }
+    myfile.close();
+    return true;
+}
+
+bool Notation::saveNotationToAnotherFile(std::string path)
+{
+    std::ofstream myfile;
+    myfile.open(path);
     if(!myfile.is_open())
     {
         return false;
