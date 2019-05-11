@@ -80,10 +80,29 @@ TeamColor QtGame::getFigureColor(int posX, int posY)
 }
 
 
-bool QtGame::setPosition(int index)
+bool QtGame::setPosition(int index, TeamColor player)
 {
-    while (gameLogic->getIndexOfGameNotation() != index) {
-        if (gameLogic->getIndexOfGameNotation() < index)
+    bool whiteMove = player == TeamColor::white;
+
+    while (gameLogic->getIndexOfGameNotation() != index && whiteMove == gameLogic->isWhiteOnTheMove()) {
+        if (gameLogic->getIndexOfGameNotation() == index)
+        {
+            if (gameLogic->isWhiteOnTheMove())
+            {
+                if (!nextPosition())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (!previousPosition())
+                {
+                    return false;
+                }
+            }
+        }
+        else if (gameLogic->getIndexOfGameNotation() < index)
         {
             if (!nextPosition())
             {

@@ -44,6 +44,8 @@ private slots:
 
     void on_buttonToLast_clicked();
 
+    void on_textBrowser_cursorPositionChanged();
+
 private:
     Ui::ChessWidget *ui;
 

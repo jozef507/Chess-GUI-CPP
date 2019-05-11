@@ -149,7 +149,7 @@ void Notation::processNotation()
     }
 }
 
-
+#include <cctype>
 /**
  * Vlastná funkcia pre odseknutie ľavých bielych znakov.
  * @param s Reťazec pre osekanie.

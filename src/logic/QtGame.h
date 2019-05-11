@@ -30,7 +30,7 @@ public:
     FigureType getFigureType(int posX, int posY);
     TeamColor getFigureColor(int posX, int posY);
 
-    bool setPosition(int index);
+    bool setPosition(int index, TeamColor player);
     bool nextPosition();
     bool previousPosition();
 
