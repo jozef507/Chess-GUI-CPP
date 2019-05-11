@@ -92,41 +92,6 @@ bool QtGame::setPosition(int index, TeamColor player)
         nextPosition();
     }
 
-    /*
-    while ( gameLogic->getIndexOfGameNotation() != index || whiteMove == gameLogic->isWhiteOnTheMove() ) {
-        if (gameLogic->getIndexOfGameNotation() == index)
-        {
-            if (gameLogic->isWhiteOnTheMove())
-            {
-                if (!nextPosition())
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (!previousPosition())
-                {
-                    return false;
-                }
-            }
-        }
-        else if (gameLogic->getIndexOfGameNotation() < index)
-        {
-            if (!nextPosition())
-            {
-                return false;
-            }
-        }
-        else
-        {
-            if (!previousPosition())
-            {
-                return false;
-            }
-        }
-    }
-*/
     return true;
 }
 
