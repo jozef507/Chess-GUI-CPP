@@ -20,6 +20,7 @@ public:
     QtGame(GuiInterface* gui, QString fileName = nullptr);
     ~QtGame();
 
+    void updateNotation();
     bool saveFile(std::string fileName = "");
 
     TeamColor getActivePlayer();

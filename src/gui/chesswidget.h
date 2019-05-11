@@ -32,7 +32,7 @@ public:
     bool isSaved();
 
     QString getFileName();
-    bool loadFile();
+    bool loadFile(bool getFromUser = true);
     void saveFile(bool saveAs = false);
 
 private slots:

@@ -66,8 +66,6 @@ void ChessWidget::updateBoard()
     board->updateBoard();
 }
 
-#include <QMessageBox>
-#include <QTabWidget>
 void ChessWidget::updateNotation(std::vector<std::string> notation, int index, bool changed)
 {
     if (changed)
@@ -157,10 +155,14 @@ QString ChessWidget::getFileName()
     return fileName;
 }
 
-bool ChessWidget::loadFile()
+bool ChessWidget::loadFile(bool getFromUser)
 {
-    // Get filename from dialog window
-    fileName = QFileDialog::getOpenFileName(this, nullptr, nullptr, "All Files (*) ;; Text Files (*.txt)");
+    if (getFromUser)
+    {
+        // Get filename from dialog window
+        QString defaultType = "Text Files (*.txt)";
+        fileName = QFileDialog::getOpenFileName(this, nullptr, nullptr, "All Files (*) ;; Text Files (*.txt)", &defaultType);
+    }
 
     if (fileName == nullptr)
     {
@@ -168,13 +170,15 @@ bool ChessWidget::loadFile()
         return false;
     }
 
-    QFile* file = new QFile(fileName);
-    if (!file->open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this, nullptr, file->errorString());
-        return false;
+    if (game != nullptr)
+    {
+        delete game;
+        game = nullptr;
     }
+    game = new QtGame(this, fileName);
 
-    QTextStream* in = new QTextStream(file);
+    board->setGame(game);
+    game->updateNotation();
 
     saved = true;
 
@@ -185,7 +189,8 @@ void ChessWidget::saveFile(bool saveAs)
 {
     if (saveAs || fileName == nullptr)
     {
-        QString newName = QFileDialog::getSaveFileName(this, nullptr, nullptr, "All Files (*) ;; Text Files (*.txt)");
+        QString defaultType = "Text Files (*.txt)";
+        QString newName = QFileDialog::getSaveFileName(this, nullptr, nullptr, "All Files (*) ;; Text Files (*.txt)", &defaultType);
 
         if (newName == nullptr)
         {
@@ -194,9 +199,15 @@ void ChessWidget::saveFile(bool saveAs)
         }
 
         fileName = newName;
-    }
 
-    game->saveFile(fileName.toUtf8().constData());
+        game->saveFile(fileName.toUtf8().constData());
+
+        loadFile(false);
+    }
+    else
+    {
+        game->saveFile();
+    }
 
     saved = true;
 }

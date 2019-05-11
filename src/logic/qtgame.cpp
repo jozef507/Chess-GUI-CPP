@@ -19,6 +19,19 @@ QtGame::QtGame(GuiInterface* newGui, QString fileName)
     */
 }
 
+QtGame::~QtGame()
+{
+    delete gameLogic;
+}
+
+void QtGame::updateNotation()
+{
+    std::vector<std::string> notation = gameLogic->getGameNotation();
+    int notationIndex = gameLogic->getIndexOfGameNotation() + 1;
+
+    gui->updateNotation(notation, notationIndex);
+}
+
 bool QtGame::saveFile(std::string fileName)
 {
     if (fileName == "")
@@ -147,10 +160,7 @@ bool QtGame::nextPosition()
     gameLogic->completeNotationMovement();
     gameLogic->changePlayer();
 
-    std::vector<std::string> notation = gameLogic->getGameNotation();
-    int notationIndex = gameLogic->getIndexOfGameNotation() + 1;
-
-    gui->updateNotation(notation, notationIndex);
+    updateNotation();
 
     return true;
 }
@@ -194,10 +204,7 @@ bool QtGame::previousPosition()
 
     gameLogic->decrementIndexOfNotationLines();
 
-    std::vector<std::string> notation = gameLogic->getGameNotation();
-    int notationIndex = gameLogic->getIndexOfGameNotation() + 1;
-
-    gui->updateNotation(notation, notationIndex);
+    updateNotation();
 
     return true;
 }
@@ -267,10 +274,7 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     gameLogic->completeNotationMovement();
     gameLogic->changePlayer();
 
-    std::vector<std::string> notation = gameLogic->getGameNotation();
-    int notationIndex = gameLogic->getIndexOfGameNotation() + 1; // Proc +1 ??
-
-    gui->updateNotation(notation, notationIndex, true);
+    updateNotation();
 
     return true;
 }
