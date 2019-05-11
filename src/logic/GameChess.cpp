@@ -303,6 +303,11 @@ bool GameChess::saveNotation()
     return this->notation->saveNotation();
 }
 
+bool GameChess::saveNotationToAnotherFile(std::string path)
+{
+    return this->notation->saveNotationToAnotherFile(path);
+}
+
 int GameChess::getChangingFigureID()
 {
     return this->notation->getChangingFigureID();
@@ -378,4 +383,9 @@ int GameChess::getGoalFieldRow()
 {
     return this->movementManager->getGoalField()->getRowPos();
 
+}
+
+bool GameChess::getIsFieldEmpty(int col, int row)
+{
+    return this->board->getField(col, row)->isEmpty();
 }

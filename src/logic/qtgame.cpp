@@ -8,12 +8,15 @@ QtGame::QtGame(GuiInterface* newGui, QString fileName)
     gui = newGui;
     gameLogic = new GameChess(fileName.toUtf8().constData());
 
+    // Initialization cannot access gui
+    /*
     gui->updateBoard();
 
     std::vector<std::string> notation = gameLogic->getGameNotation();
     int notationIndex = gameLogic->getIndexOfGameNotation() + 1; // Proc +1 ??
 
     gui->updateNotation(notation, notationIndex);
+    */
 }
 
 QtGame::~QtGame()
@@ -38,27 +41,30 @@ bool QtGame::saveFile()
     return gameLogic->saveNotation();
 }
 
-
 bool QtGame::isFieldEmpty(int posX, int posY)
 {
-    try
-    {
-        gameLogic->getFigureIDOnField(posX, posY);
-    }
-    catch (...)
-    {
-        return true;
-    }
-    return false;
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
+    return gameLogic->getIsFieldEmpty(posX, posY);
 }
 
 FigureType QtGame::getFigureType(int posX, int posY)
 {
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
     return typeFromId(gameLogic->getFigureIDOnField(posX, posY));
 }
 
 TeamColor QtGame::getFigureColor(int posX, int posY)
 {
+    // Chessboard indexing correction
+    posX += 1;
+    posY += 1;
+
     return gameLogic->getIsWhiteFigureOnField(posX, posY) ? TeamColor::white : TeamColor::black;
 }
 
@@ -212,15 +218,20 @@ bool QtGame::previousPosition()
 */
 bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
 {
-#include <iostream>
-std::cout << "HERE\n";
+
+    // Chessboard indexing correction
+    srcX += 1;
+    srcY += 1;
+    dstX += 1;
+    dstY += 1;
+
     gameLogic->nullMovementManager();
-std::cout << "HERE\n";
+
     if (!gameLogic->setPlayerMovement(srcX, srcY))
     {
         return false;
     }
-std::cout << "HERE\n";
+
     if (!gameLogic->setPlayerMovement(dstX, dstY))
     {
         return false;

@@ -91,8 +91,11 @@ void MainWindow::addTab(QString fileName)
 {
     ChessWidget* newGame = new ChessWidget;
 
+    newGame->updateBoard();
+
     ui->tabWidget->addTab(newGame, fileName);
     ui->tabWidget->setCurrentWidget(newGame);
+
 }
 
 void MainWindow::actualiseTabName()
