@@ -21,7 +21,7 @@ public:
     explicit ChessWidget(QWidget *parent = nullptr);
     ~ChessWidget();
 
-    int getNewFigureId();
+    FigureType getNewFigureType();
 
     void updateFigurePosition(int srcX, int srcY, int dstX, int dstY);
     void changeFigureType(FigureType newType, TeamColor color, int posX, int posY);

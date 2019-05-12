@@ -113,6 +113,7 @@ bool QtGame::setPosition(int index, TeamColor player)
     -ak false:
         -game.nullMovementManager();
 */
+#include <QMessageBox>
 bool QtGame::nextPosition()
 {
     if (gameLogic->isLastIndexOfNotation())
@@ -140,13 +141,13 @@ bool QtGame::nextPosition()
     {
         int col = gameLogic->getGoalFieldCol();
         int row = gameLogic->getGoalFieldRow();
-
-        int typeId = gameLogic->getFigureIDOnField(col, row);
+QMessageBox::information(nullptr, "", ("C " + std::to_string(col) + " R " + std::to_string(row)).c_str() );
+        int typeId = gameLogic->getChangingFigureID();
         FigureType figureType = typeFromId(typeId);
-
+QMessageBox::information(nullptr, "", ("Type: " + std::to_string(typeId)).c_str() );
         TeamColor figureColor = gameLogic->getIsWhiteFigureOnField(col, row) ? TeamColor::white : TeamColor::black;
 
-        gui->changeFigureType(figureType, figureColor, col, row);
+        gui->changeFigureType(figureType, figureColor, col - 1, row - 1);
     }
 
     gameLogic->incrementIndexOfNotationLines();
@@ -193,7 +194,17 @@ bool QtGame::previousPosition()
     gui->updateFigurePosition(gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1,
                               gameLogic->getStartFieldCol() - 1, gameLogic->getStartFieldRow() - 1 );
 
-    gui->updatePosition(gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1);
+    // If figure was a pawn, change back to pawn
+    if (gameLogic->getIsChangingFigure())
+    {
+        gui->updatePosition(gameLogic->getStartFieldCol() - 1, gameLogic->getStartFieldRow() - 1);
+    }
+
+    // Recreate removed figure
+    if (gameLogic->isRemovingFigure())
+    {
+        gui->updatePosition(gameLogic->getGoalFieldCol() - 1, gameLogic->getGoalFieldRow() - 1);
+    }
 
     gameLogic->decrementIndexOfNotationLines();
 
@@ -254,7 +265,27 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     // Figure change
     if (gameLogic->getIsChangingFigure())
     {
-        int newFigureId = gui->getNewFigureId();
+        FigureType newFigureType = gui->getNewFigureType();
+
+        int newFigureId;
+        switch (newFigureType) {
+        case FigureType::knight:
+            newFigureId = 3;
+            break;
+        case FigureType::bishop:
+            newFigureId = 2;
+            break;
+        case FigureType::rook:
+            newFigureId = 4;
+            break;
+        case FigureType::queen:
+            newFigureId = 1;
+            break;
+        default:
+            newFigureId = -1;
+            break;
+        }
+
         if (!gameLogic->createNewFigure(newFigureId))
         {
             return false;

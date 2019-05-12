@@ -42,7 +42,8 @@ SOURCES += \
         boardwidget.cpp \
         chesswidget.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        newfiguredialog.cpp
 
 HEADERS += \
         ../logic/Board.h \
@@ -65,12 +66,14 @@ HEADERS += \
         chesstypes.h \
         chesswidget.h \
         guiinterface.h \
-        mainwindow.h
+        mainwindow.h \
+        newfiguredialog.h
 
 FORMS += \
         boardwidget.ui \
         chesswidget.ui \
-        mainwindow.ui
+        mainwindow.ui \
+        newfiguredialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

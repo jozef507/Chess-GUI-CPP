@@ -10,7 +10,7 @@ class GuiInterface
 public:
     virtual ~GuiInterface() = default;
 
-    virtual int getNewFigureId() = 0;
+    virtual FigureType getNewFigureType() = 0;
 
     virtual void updateFigurePosition(int srcX, int srcY, int dstX, int dstY) = 0;
     virtual void changeFigureType(FigureType newType, TeamColor color, int posX, int posY)     = 0;

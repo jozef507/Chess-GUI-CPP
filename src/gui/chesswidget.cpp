@@ -6,6 +6,8 @@
 
 #include <QTextStream>
 
+#include "newfiguredialog.h"
+
 ChessWidget::ChessWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ChessWidget)
@@ -37,13 +39,24 @@ ChessWidget::~ChessWidget()
  * 4 - rook
  * 5 - pawn
  */
-int ChessWidget::getNewFigureId()
+FigureType ChessWidget::getNewFigureType()
 {
-    int id = 1;
+    NewFigureDialog dialog;
 
-    // TODO: get id from user
-
-    return id;
+    int result = dialog.exec();
+QMessageBox::information(nullptr, "", std::to_string(result).c_str());
+    switch (result) {
+    case 1:
+        return FigureType::knight;
+    case 2:
+        return FigureType::bishop;
+    case 3:
+        return FigureType::rook;
+    case 4:
+        return FigureType::queen;
+    default:
+        return FigureType::invalid;
+    }
 }
 
 void ChessWidget::updateFigurePosition(int srcX, int srcY, int dstX, int dstY)
