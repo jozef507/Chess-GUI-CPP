@@ -24,6 +24,11 @@ QtGame::~QtGame()
     delete gameLogic;
 }
 
+bool QtGame::isNotationCorrect()
+{
+    return gameLogic->isNotationRight();
+}
+
 void QtGame::updateNotation()
 {
     std::vector<std::string> notation = gameLogic->getGameNotation();
@@ -141,10 +146,10 @@ bool QtGame::nextPosition()
     {
         int col = gameLogic->getGoalFieldCol();
         int row = gameLogic->getGoalFieldRow();
-QMessageBox::information(nullptr, "", ("C " + std::to_string(col) + " R " + std::to_string(row)).c_str() );
+
         int typeId = gameLogic->getChangingFigureID();
         FigureType figureType = typeFromId(typeId);
-QMessageBox::information(nullptr, "", ("Type: " + std::to_string(typeId)).c_str() );
+
         TeamColor figureColor = gameLogic->getIsWhiteFigureOnField(col, row) ? TeamColor::white : TeamColor::black;
 
         gui->changeFigureType(figureType, figureColor, col - 1, row - 1);

@@ -190,6 +190,12 @@ bool ChessWidget::loadFile(bool getFromUser)
     }
     game = new QtGame(this, fileName);
 
+    if (!game->isNotationCorrect())
+    {
+        QMessageBox::information(this, nullptr, "Zápis partie je chybný.");
+        return false;
+    }
+
     board->setGame(game);
     game->updateNotation();
 

@@ -21,6 +21,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionNewGame_triggered()
 {
     addTab();
+    actualiseTabName();
 }
 
 void MainWindow::on_actionOpen_triggered()

@@ -20,6 +20,7 @@ public:
     QtGame(GuiInterface* gui, QString fileName = nullptr);
     ~QtGame();
 
+    bool isNotationCorrect();
     void updateNotation();
     bool saveFile(std::string fileName = "");
 
