@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/24/2019.
-//
+/**
+ * Trieda reprezentuje jadro (hlavnu logiku) aplikácie.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #include "GameChess.h"
 #include "MovementManager.h"

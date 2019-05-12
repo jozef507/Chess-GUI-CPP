@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 5/3/2019.
-//
+/**
+ * Trieda reprezentuje manažéra pre aktívne/pasívne figúrky.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #ifndef ICP_FIGURESMANAGER_H
 #define ICP_FIGURESMANAGER_H

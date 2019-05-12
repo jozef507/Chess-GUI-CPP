@@ -1,7 +1,8 @@
-//
-// Created by Jozef on 4/21/2019.
-//
-
+/**
+ * Trieda obsahuje reprezentáciu šachovnice
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 #ifndef ICP_BOARD_H
 #define ICP_BOARD_H
 

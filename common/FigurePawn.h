@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/21/2019.
-//
+/**
+ * Trieda reprezentuje figúrku pešiaka.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #ifndef ICP_FIGUREPAWN_H
 #define ICP_FIGUREPAWN_H

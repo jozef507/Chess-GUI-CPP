@@ -1,9 +1,12 @@
+/**
+ * Trieda reprezentuje notáciu hry.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
+
+
 #include <utility>
 #include <iostream>
-
-//
-// Created by Jozef on 4/24/2019.
-//
 
 #include "Notation.h"
 

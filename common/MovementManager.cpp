@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/24/2019.
-//
+/**
+ * Trieda reprezentuje aktuálny ťah hry.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #include "MovementManager.h"
 #include "FiguresManager.h"

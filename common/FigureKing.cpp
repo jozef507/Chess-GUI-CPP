@@ -1,6 +1,9 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+/**
+ * Trieda reprezentuje figúrku kráľa.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
+
 
 #include "FigureKing.h"
 #include "FiguresManager.h"

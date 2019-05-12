@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+/**
+ * Trieda reprezentuje figúrku dámy.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #ifndef ICP_FIGUREQUEEN_H
 #define ICP_FIGUREQUEEN_H

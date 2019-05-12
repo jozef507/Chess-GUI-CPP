@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/24/2019.
-//
+/**
+ * Trieda reprezentuje figúrku veže.
+ * @author Jozef Ondria
+ * @author Jan Holásek
+ */
 
 #include <cmath>
 #include "FigureRook.h"
