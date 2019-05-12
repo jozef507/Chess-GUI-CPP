@@ -1,11 +1,19 @@
 #include "newfiguredialog.h"
 #include "ui_newfiguredialog.h"
 
-NewFigureDialog::NewFigureDialog(QWidget *parent) :
+NewFigureDialog::NewFigureDialog(QWidget *parent, TeamColor player) :
     QDialog(parent),
     ui(new Ui::NewFigureDialog)
 {
     ui->setupUi(this);
+
+    if (player == TeamColor::black)
+    {
+        ui->buttonKnight->setIcon(QIcon(QPixmap(":img/knightBlack")));
+        ui->buttonBishop->setIcon(QIcon(QPixmap(":img/bishopBlack")));
+        ui->buttonRook->setIcon(QIcon(QPixmap(":img/rookBlack")));
+        ui->buttonQueen->setIcon(QIcon(QPixmap(":img/queenBlack")));
+    }
 }
 
 NewFigureDialog::~NewFigureDialog()

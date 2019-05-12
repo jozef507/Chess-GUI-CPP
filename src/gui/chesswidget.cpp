@@ -45,10 +45,10 @@ ChessWidget::~ChessWidget()
  */
 FigureType ChessWidget::getNewFigureType()
 {
-    NewFigureDialog dialog;
+    NewFigureDialog dialog(this, game->getActivePlayer());
 
     int result = dialog.exec();
-QMessageBox::information(nullptr, "", std::to_string(result).c_str());
+
     switch (result) {
     case 1:
         return FigureType::knight;

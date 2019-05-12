@@ -2,6 +2,7 @@
 #define NEWFIGUREDIALOG_H
 
 #include <QDialog>
+#include "chesstypes.h"
 
 namespace Ui {
 class NewFigureDialog;
@@ -12,7 +13,7 @@ class NewFigureDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewFigureDialog(QWidget *parent = nullptr);
+    explicit NewFigureDialog(QWidget *parent = nullptr, TeamColor player = TeamColor::white);
     ~NewFigureDialog();
 
 private slots:
