@@ -13,6 +13,8 @@ doxygen:
 
 clean:
 	(cd src; make clean; rm .qmake.stash Makefile chess)
+	(cd doc; rm -r html)
+	rm chess.core
 
 pack:
-	zip xholas09.zip -r src/ examples/ doc/ README.txt Makefile
+	zip xondri05-xholas09.zip -r src/ examples/ doc/ README.txt Makefile
