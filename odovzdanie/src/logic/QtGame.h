@@ -14,8 +14,8 @@
 #include "Game.h"
 #include "GameChess.h"
 
-#include "chesstypes.h"
-#include "guiinterface.h"
+#include "../gui/chesstypes.h"
+#include "../gui/guiinterface.h"
 
 class QtGame
 {

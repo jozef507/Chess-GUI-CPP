@@ -1,0 +1,10 @@
+1. e2e4 f7f5
+2. e4xf5 g7g6
+3. f5xg6 Jg8f6
+4. g6xh7 Vh8g8
+5. h7xg8D Jf6h7
+6. Dg8xh7 e7e5
+7. Dh7e7+ Sf8xe7
+8. Dd1h5+ Ke8f8
+9. Sf1c4 Se7b4
+10. Dh5f7#

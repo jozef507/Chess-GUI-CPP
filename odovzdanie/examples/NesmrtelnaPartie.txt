@@ -1,0 +1,23 @@
+1. e2e4 e7e5
+2. f2f4 e5xf4
+3. Sf1c4 Dd8h4+
+4. Ke1f1 b7b5
+5. Sc4xb5 Jg8f6
+6. Jg1f3 Dh4h6
+7. d2d3 Jf6h5
+8. Jf3h4 Dh6g5
+9. Jh4f5 c7c6
+10. g2g4 Jh5f6
+11. Vh1g1 c6xb5
+12. h2h4 Dg5g6
+13. h4h5 Dg6g5
+14. Dd1f3 Jf6g8
+15. Sc1xf4 Dg5f6
+16. Jb1c3 Sf8c5
+17. Jc3d5 Df6xb2
+18. Sf4d6 Sc5xg1
+19. e4e5 Db2xa1+
+20. Kf1e2 Jb8a6
+21. Jf5xg7+ Ke8d8
+22. Df3f6+ Jg8xf6
+23. Sd6e7#
