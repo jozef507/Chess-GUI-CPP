@@ -1,3 +1,11 @@
+/**
+ * boardwidget.cpp
+ *
+ * Qt widget řešící zobrazení šachovnice a figur
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "boardwidget.h"
 #include "ui_boardwidget.h"
 #include <iostream>
@@ -17,6 +25,10 @@ BoardWidget::~BoardWidget()
 }
 
 
+/**
+ * @brief Propojuje zobrazení hry s vnitřní logikou
+ * @param Vnitřní logika hry
+ */
 void BoardWidget::setGame(QtGame* newGame)
 {
     game = newGame;
@@ -24,11 +36,23 @@ void BoardWidget::setGame(QtGame* newGame)
     updateBoard();
 }
 
+/**
+ * @brief Zajišťuje čtvercový charakter šachovnice
+ * @param Šířka widgetu
+ * @return Výška widgetu
+ */
 int BoardWidget::heightForWidth(int w) const
 {
     return w;
 }
 
+/**
+ * @brief Přesune figuru ze zdrojového pole na cílové
+ * @param Sloupec zdrojového pole
+ * @param Řádek zdrojového pole
+ * @param Sloupec cílového pole
+ * @param Řádek cílového pole
+ */
 void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
 {
     unsigned long long X = static_cast<unsigned long long>(srcX);
@@ -50,6 +74,13 @@ void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
     figure->move(getFigureImgPosition(dstX, dstY));
 }
 
+/**
+ * @brief Vymění figuru na pozici za novou
+ * @param Typ nové figury
+ * @param Barva nové figury
+ * @param Sloupec
+ * @param Řádek
+ */
 void BoardWidget::changeFigure(FigureType type, TeamColor color, int posX, int posY)
 {
     unsigned long long X = static_cast<unsigned long long>(posX);
@@ -60,6 +91,9 @@ void BoardWidget::changeFigure(FigureType type, TeamColor color, int posX, int p
     addFigure(type, color, posX, posY);
 }
 
+/**
+ * @brief Obnoví vykreslení šachovnice podle vnitřní logiky
+ */
 void BoardWidget::updateBoard()
 {
     QPixmap newBoardPixmap(":/img/board");
@@ -93,6 +127,11 @@ void BoardWidget::updateBoard()
     }
 }
 
+/**
+ * @brief Obnoví pole šachovnice podle vnitřní logiky
+ * @param Sloupec
+ * @param Řádek
+ */
 void BoardWidget::updatePosition(int posX, int posY)
 {
     unsigned long long X = static_cast<unsigned long long>(posX);
@@ -114,6 +153,13 @@ void BoardWidget::updatePosition(int posX, int posY)
 }
 
 
+/**
+ * @brief Přidá novou figuru na zadané pole
+ * @param Typ figury
+ * @param Barva figury
+ * @param Sloupec
+ * @param Řádek
+ */
 void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
 {
     QLabel* newFigure = new QLabel(this);
@@ -184,6 +230,12 @@ void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
     newFigure->show();
 }
 
+/**
+ * @brief Přepočítává pozici ze šachovnice na pozici v obraze
+ * @param Sloupec šachovnice
+ * @param Řádek šachovnice
+ * @return Pozice v obraze
+ */
 QPoint BoardWidget::getFigureImgPosition(int x, int y)
 {
     int posX = static_cast<int>( ((boardSquareSize * x) + boardBorderSize) * scale );
@@ -192,6 +244,12 @@ QPoint BoardWidget::getFigureImgPosition(int x, int y)
     return QPoint (posX, posY);
 }
 
+/**
+ * @brief Přepočítává pozici z obrazu no pizici v šachovnici
+ * @param Souřadnice x
+ * @param Souřadnice y
+ * @return Pozice na šachovnici
+ */
 QPoint BoardWidget::getFigureBoardPosition(int x, int y)
 {
     int posX = static_cast<int>( (static_cast<double>( x ) / scale - boardBorderSize) / boardSquareSize );
@@ -200,6 +258,10 @@ QPoint BoardWidget::getFigureBoardPosition(int x, int y)
     return  QPoint(posX, posY);
 }
 
+/**
+ * @brief Přepočítání velikostí
+ * @param event
+ */
 void BoardWidget::resizeEvent(QResizeEvent* event)
 {
     int newBoardSize = event->size().width() > event->size().height() ? event->size().height() : event->size().width();
@@ -208,6 +270,10 @@ void BoardWidget::resizeEvent(QResizeEvent* event)
     updateBoard();
 }
 
+/**
+ * @brief Začátek tahu
+ * @param event
+ */
 void BoardWidget::mousePressEvent(QMouseEvent *event)
 {
     QPoint pos = getFigureBoardPosition(event->x(), event->y());
@@ -223,6 +289,10 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/**
+ * @brief Ukončení tahu
+ * @param event
+ */
 void BoardWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (moveImg == nullptr)
@@ -257,6 +327,10 @@ void BoardWidget::mouseReleaseEvent(QMouseEvent *event)
     moveByDrag = false;
 }
 
+/**
+ * @brief Posun figury s kurzorem myši
+ * @param event
+ */
 void BoardWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (moveInvalid)

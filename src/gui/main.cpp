@@ -1,3 +1,11 @@
+/**
+ * main.cpp - Automaticky vygenerováno
+ *
+ * Main - spuštění programu
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "mainwindow.h"
 #include <QApplication>
 

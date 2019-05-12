@@ -1,3 +1,11 @@
+/**
+ * QtGame.cpp
+ *
+ * Rozhraní pro zjednodušení logiky hry a komunikaci s GUI
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "QtGame.h"
 
 #include <QString>
@@ -24,11 +32,53 @@ QtGame::~QtGame()
     delete gameLogic;
 }
 
+
+/**
+ * @brief Získá typ figury z id
+ * @param Id figury
+ * @return Typ figury
+ */
+FigureType QtGame::typeFromId(int id)
+{
+    /*
+     * 0 - king
+     * 1 - queen
+     * 2 - bishop
+     * 3 - knight
+     * 4 - rook
+     * 5 - pawn
+     */
+    switch (id) {
+        case 0:
+            return  FigureType::king;
+        case 1:
+            return FigureType::queen;
+        case 2:
+            return  FigureType::bishop;
+        case 3:
+            return FigureType::knight;
+        case 4:
+            return FigureType::rook;
+        case 5:
+            return FigureType::pawn;
+        default:
+            return FigureType::invalid;
+    }
+}
+
+/**
+ * @brief Kontrola zda je notace v pořádku
+ * @return Vrací true pokud notace obsahuje validní šachovou partii, jinak false
+ */
 bool QtGame::isNotationCorrect()
 {
     return gameLogic->isNotationRight();
 }
 
+/**
+ * @brief Obnoví zobrazení notace
+ * @param Zda je notace změněna
+ */
 void QtGame::updateNotation(bool changed)
 {
     std::vector<std::string> notation = gameLogic->getGameNotation();
@@ -37,6 +87,11 @@ void QtGame::updateNotation(bool changed)
     gui->updateNotation(notation, notationIndex, changed);
 }
 
+/**
+ * @brief Uloží notaci do souboru
+ * @param Jméno souboru
+ * @return True pokud proběhlo v pořádku, jinak false
+ */
 bool QtGame::saveFile(std::string fileName)
 {
     if (fileName == "")
@@ -47,16 +102,30 @@ bool QtGame::saveFile(std::string fileName)
     return gameLogic->saveNotationToAnotherFile(fileName);
 }
 
+/**
+ * @brief Získá barvu hráče, který je aktuálně na tahu
+ * @return Barva hráče na tahu
+ */
 TeamColor QtGame::getActivePlayer()
 {
     return gameLogic->isWhiteOnTheMove() == true ? TeamColor::white : TeamColor::black;
 }
 
+/**
+ * @brief Je partie ve výchozí pozici?
+ * @return True pokud jsou figury ve výchozí pozici (před 1. tahem)
+ */
 bool QtGame::isInitialPosition()
 {
     return gameLogic->isFirstIndexOfNotation();
 }
 
+/**
+ * @brief Je pole prázdné
+ * @param Sloupec
+ * @param Řádek
+ * @return True pokud je pole prázdné, false pokud je na něm figura
+ */
 bool QtGame::isFieldEmpty(int posX, int posY)
 {
     // Chessboard indexing correction
@@ -66,6 +135,12 @@ bool QtGame::isFieldEmpty(int posX, int posY)
     return gameLogic->getIsFieldEmpty(posX, posY);
 }
 
+/**
+ * @brief Získá typ figury na daném poli
+ * @param Sloupec
+ * @param Řádek
+ * @return Typ figury
+ */
 FigureType QtGame::getFigureType(int posX, int posY)
 {
     // Chessboard indexing correction
@@ -75,6 +150,12 @@ FigureType QtGame::getFigureType(int posX, int posY)
     return typeFromId(gameLogic->getFigureIDOnField(posX, posY));
 }
 
+/**
+ * @brief Získá barvu figury na daném poli
+ * @param Sloupec
+ * @param Řádek
+ * @return Barva figury
+ */
 TeamColor QtGame::getFigureColor(int posX, int posY)
 {
     // Chessboard indexing correction
@@ -85,6 +166,12 @@ TeamColor QtGame::getFigureColor(int posX, int posY)
 }
 
 
+/**
+ * @brief Nastaví partii do pozice podle indexu tahu a hráče na tahu
+ * @param Řádek notace
+ * @param Hráč na tahu
+ * @return True pokud proběhne úspěšně, false pokud selže
+ */
 bool QtGame::setPosition(int index, TeamColor player)
 {
     while (previousPosition());
@@ -100,25 +187,10 @@ bool QtGame::setPosition(int index, TeamColor player)
     return true;
 }
 
-/*
--game.setPlaybackMovement()
--ak funkcia vratila true (znamena že nastavenie prebehlo úspešne... tuna už nekontorluješ isMovementCompletlySet!!!):
-    -game.performPlaybackMovement();
-    -ak funkcia vratila true:
-        -tvoje grafické úkony
-        -v prípade že pri ťahu došlo k zámene pešiaka za novu figúrku (zistíš pomocou funkcie game.getIsCHangingFigure()):
-            -keďže sa figurka vymenila podľa notacie už je vymenena za novú. To o akú novú figúrku ide zistíš pomocou funkcie
-             game.getChangingFigureID(), ktorá ti vráti ID figúrky (1-queen, 2-bishop, 3-knight, 4-rook), farbu figurky pomocou
-             game.isWhiteOnTheMove(ak true->biela ak nie čierna)
-        -game.incrementIndexOfNotationLines();
-        -teraz môžeš vypýtať notaciu aby si ju vypísal (game.getGameNotation(), game.getIndexOfGameNotation()+1//poradie riadka na vyznačenie)
-        -game.completeNotationMovement();
-            -game.nullMovementManager();
-            -game.changePlayer();
-    -ak false:
-        -game.nullMovementManager();
-*/
-#include <QMessageBox>
+/**
+ * @brief Nastaví partii o tah dále
+ * @return True pokud proběhne úspěšně, false pokud selže
+ */
 bool QtGame::nextPosition()
 {
     if (gameLogic->isLastIndexOfNotation())
@@ -167,17 +239,9 @@ bool QtGame::nextPosition()
     return true;
 }
 
-/*
--game.setPlaybackUndoMovement();
--ak funkcia vratila true (znamena že nastavenie prebehlo úspešne... tuna už nekontorluješ isMovementCompletlySet!!!):
-    -game.performPlaybackUndoMovement();
-    -ak funkcia vratila true:
-        -tvoje grafické úkony<
-        -game.decrementIndexOfNotationLines();
-        -teraz môžeš vypýtať notaciu aby si ju vypísal (game.getGameNotation(), game.getIndexOfGameNotation()+1//poradie riadka na vyznačenie)
-        -game.nullMovementManager();
-    -ak false:
-        -game.nullMovementManager();
+/**
+ * @brief Vrátí pozici o tah zpět
+ * @return True pokud proběhne úspěšně, false pokud selže
  */
 bool QtGame::previousPosition()
 {
@@ -221,24 +285,14 @@ bool QtGame::previousPosition()
     return true;
 }
 
-/*
-    Navod:
-
-    -game.setPlayerMovement()
-    -ak funkcia vratila true (znamena že nastavenie prebehlo úspešne... tuna už potrebuješ kontrolovať či je MovementManager kompletne nastaveny pomocou isMovementCompletlySet() -> ak true možeš vojsť do podmienky):
-        -game.performPlayerMovement();
-        -ak funkcia vratila true:
-            -tvoje grafické úkony
-            -v prípade že pri ťahu došlo k zámene pešiaka za novu figúrku (zistíš pomocou funkcie game.getIsCHangingFigure()):
-                -musí užívateľ vybrať figúrku, po tom ju treba v logike vytvoriť pomocou game.createNewFigure(ID_figúrky)
-            -game.addPlayerNotationMovement();
-            -teraz môžeš vypýtať notaciu aby si ju vypísal (game.getGameNotation(), game.getIndexOfGameNotation()+1//poradie riadka na vyznačenie)
-            -game.completeNotationMovement();
-                -game.nullMovementManager();
-                -game.changePlayer();
-        -ak false:
-            -game.nullMovementManager();
-*/
+/**
+ * @brief Přidá uživatelem zadaný tah
+ * @param Zdrojový sloupec
+ * @param Zdrojový řádek
+ * @param Cílový sloupec
+ * @param Cílový řádek
+ * @return True pokud proběhne úspěšně, false pokud selže
+ */
 bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
 {
     // Chessboard indexing correction
@@ -309,32 +363,4 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     updateNotation(true);
 
     return true;
-}
-
-/*
- * 0 - king
- * 1 - queen
- * 2 - bishop
- * 3 - knight
- * 4 - rook
- * 5 - pawn
- */
-FigureType QtGame::typeFromId(int id)
-{
-    switch (id) {
-        case 0:
-            return  FigureType::king;
-        case 1:
-            return FigureType::queen;
-        case 2:
-            return  FigureType::bishop;
-        case 3:
-            return FigureType::knight;
-        case 4:
-            return FigureType::rook;
-        case 5:
-            return FigureType::pawn;
-        default:
-            return FigureType::invalid;
-    }
 }

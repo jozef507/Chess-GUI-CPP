@@ -1,3 +1,11 @@
+/**
+ * newfiguredialog.cpp
+ *
+ * Dialogové okno pro výběr nové figury
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "newfiguredialog.h"
 #include "ui_newfiguredialog.h"
 
@@ -21,24 +29,36 @@ NewFigureDialog::~NewFigureDialog()
     delete ui;
 }
 
+/**
+ * @brief Vybrán jezdec
+ */
 void NewFigureDialog::on_buttonKnight_clicked()
 {
     close();
     setResult(1);
 }
 
+/**
+ * @brief Vybrán střelec
+ */
 void NewFigureDialog::on_buttonBishop_clicked()
 {
     close();
     setResult(2);
 }
 
+/**
+ * @brief Vybrána věž
+ */
 void NewFigureDialog::on_buttonRook_clicked()
 {
     close();
     setResult(3);
 }
 
+/**
+ * @brief Vybrána dáma
+ */
 void NewFigureDialog::on_buttonQueen_clicked()
 {
     close();

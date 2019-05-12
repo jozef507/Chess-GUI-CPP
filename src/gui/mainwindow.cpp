@@ -1,3 +1,11 @@
+/**
+ * mainwindow.cpp
+ *
+ * Hlavní okno programu, obsahuje záložky s jednotlivými partiemi
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -22,12 +30,36 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief Obnoví jméno záložky
+ */
+void MainWindow::actualiseTabName()
+{
+    if (ChessWidget* game = dynamic_cast<ChessWidget*>(ui->tabWidget->currentWidget()))
+    {
+        if (game->getFileName() != nullptr)
+        {
+            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), game->getFileName());
+        }
+        else
+        {
+            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), "Nová Hra");
+        }
+    }
+}
+
+/**
+ * @brief Vytvoří novou záložku s novou hrou
+ */
 void MainWindow::on_actionNewGame_triggered()
 {
     addTab();
     actualiseTabName();
 }
 
+/**
+ * @brief Vytvoří novou záložku a načte hru ze souboru
+ */
 void MainWindow::on_actionOpen_triggered()
 {
     int activeTabIdx = ui->tabWidget->currentIndex();
@@ -50,6 +82,9 @@ void MainWindow::on_actionOpen_triggered()
     }
 }
 
+/**
+ * @brief Uloží notaci z aktivní záložky
+ */
 void MainWindow::on_actionSave_triggered()
 {
     if (ChessWidget* game = dynamic_cast<ChessWidget*>(ui->tabWidget->currentWidget()))
@@ -59,6 +94,9 @@ void MainWindow::on_actionSave_triggered()
     }
 }
 
+/**
+ * @brief Uloží notaci z aktivní záložky do nového souboru
+ */
 void MainWindow::on_actionSaveAs_triggered()
 {
     if (ChessWidget* game = dynamic_cast<ChessWidget*>(ui->tabWidget->currentWidget()))
@@ -68,16 +106,27 @@ void MainWindow::on_actionSaveAs_triggered()
     }
 }
 
+/**
+ * @brief Ukončí program
+ */
 void MainWindow::on_actionClose_triggered()
 {
     close();
 }
 
+/**
+ * @brief Zavře záložku podle indexu
+ * @param Index zavírané záložky
+ */
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
     closeTab(index);
 }
 
+/**
+ * @brief Událost při zavření programu
+ * @param event
+ */
 void MainWindow::closeEvent (QCloseEvent *event)
 {
     // Close all tabs -> Force saving/discarding changes
@@ -92,6 +141,10 @@ void MainWindow::closeEvent (QCloseEvent *event)
     event->accept();
 }
 
+/**
+ * @brief Přidá novou záložku
+ * @param Jméno souboru / záložky
+ */
 void MainWindow::addTab(QString fileName)
 {
     ChessWidget* newGame = new ChessWidget;
@@ -103,21 +156,11 @@ void MainWindow::addTab(QString fileName)
 
 }
 
-void MainWindow::actualiseTabName()
-{
-    if (ChessWidget* game = dynamic_cast<ChessWidget*>(ui->tabWidget->currentWidget()))
-    {
-        if (game->getFileName() != nullptr)
-        {
-            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), game->getFileName());
-        }
-        else
-        {
-            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), "Nová Hra");
-        }
-    }
-}
-
+/**
+ * @brief Zavře záložku
+ * @param Index zavírané záložky
+ * @param Vynutí zavření bez uložení
+ */
 bool MainWindow::closeTab(int index, bool force)
 {
     if (ChessWidget* game = dynamic_cast<ChessWidget*>(ui->tabWidget->widget(index)))

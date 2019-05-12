@@ -1,3 +1,11 @@
+/**
+ * chesswidget.cpp
+ *
+ * Qt widget řešící zobrazení jedné šachové partie včetně notace
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #include "chesswidget.h"
 #include "ui_chesswidget.h"
 
@@ -35,16 +43,21 @@ ChessWidget::~ChessWidget()
     delete ui;
 }
 
-/*
- * 0 - king
- * 1 - queen
- * 2 - bishop
- * 3 - knight
- * 4 - rook
- * 5 - pawn
+
+/**
+ * @brief Zobrazí dialogové okno pro výběr nové figury
+ * @return Typ vybrané figury
  */
 FigureType ChessWidget::getNewFigureType()
 {
+    /*
+     * 0 - king
+     * 1 - queen
+     * 2 - bishop
+     * 3 - knight
+     * 4 - rook
+     * 5 - pawn
+     */
     NewFigureDialog dialog(this, game->getActivePlayer());
 
     int result = dialog.exec();
@@ -63,26 +76,54 @@ FigureType ChessWidget::getNewFigureType()
     }
 }
 
+/**
+ * @brief Přesune figuru z výchozí pozice na cílovou
+ * @param Zdrojový sloupec
+ * @param Zdrojový řádek
+ * @param Cílový sloupec
+ * @param Cílový řádek
+ */
 void ChessWidget::updateFigurePosition(int srcX, int srcY, int dstX, int dstY)
 {
     board->moveFigure(srcX, srcY, dstX, dstY);
 }
 
+/**
+ * @brief Změní typ figury na zadané pozici
+ * @param Typ figury
+ * @param Barva figury
+ * @param Sloupec
+ * @param Řádek
+ */
 void ChessWidget::changeFigureType(FigureType newType, TeamColor color, int posX, int posY)
 {
     board->changeFigure(newType, color, posX, posY);
 }
 
+/**
+ * @brief Obnoví obsah pole podle vnitřní logiky
+ * @param Sloupec
+ * @param Řádek
+ */
 void ChessWidget::updatePosition(int posX, int posY)
 {
     board->updatePosition(posX, posY);
 }
 
+/**
+ * @brief Obnoví obsah všech polí šachovnice podle vnitřní logiky
+ */
 void ChessWidget::updateBoard()
 {
     board->updateBoard();
 }
 
+/**
+ * @brief Obnoví notaci podle vnitřní logiky
+ * @param Vektor řádků notace
+ * @param Aktuální řádek v notaci
+ * @param Udává zda byla notace změněna (vložen nový tah)
+ */
 void ChessWidget::updateNotation(std::vector<std::string> notation, int index, bool changed)
 {
     if (changed)
@@ -162,16 +203,29 @@ void ChessWidget::updateNotation(std::vector<std::string> notation, int index, b
 }
 
 
+/**
+ * @brief Vrací zda je aktuální stav notace uložen do souboru.
+ * @return Hodnota atributu saved
+ */
 bool ChessWidget::isSaved()
 {
     return saved;
 }
 
+/**
+ * @brief Vrací jméno posledního souboru, do kterého byla notace uložena.
+ * @return Jméno souboru s notací
+ */
 QString ChessWidget::getFileName()
 {
     return fileName;
 }
 
+/**
+ * @brief Načte notaci ze souboru
+ * @param Pokud je pravda, získá soubor pomocí dialogového okna od uživatele, jinak použije předchozí soubor
+ * @return Vrací true pokud proběhne v pořádku, false v případě chyby
+ */
 bool ChessWidget::loadFile(bool getFromUser)
 {
     if (getFromUser)
@@ -208,6 +262,10 @@ bool ChessWidget::loadFile(bool getFromUser)
     return true;
 }
 
+/**
+ * @brief Uloží notaci do souboru
+ * @param Pokud je true, získá nový soubor pomocí dialogového okna od uživatele
+ */
 void ChessWidget::saveFile(bool saveAs)
 {
     if (saveAs || fileName == nullptr)
@@ -235,26 +293,41 @@ void ChessWidget::saveFile(bool saveAs)
     saved = true;
 }
 
+/**
+ * @brief Přejít na začátek partie
+ */
 void ChessWidget::on_buttonToFirst_clicked()
 {
     while (game->previousPosition());
 }
 
+/**
+ * @brief Vrátí pozici o jeden tah zpět
+ */
 void ChessWidget::on_buttonPrevious_clicked()
 {
     game->previousPosition();
 }
 
+/**
+ * @brief Nastaví pozici na další tah
+ */
 void ChessWidget::on_buttonNext_clicked()
 {
     game->nextPosition();
 }
 
+/**
+ * @brief Přejít na konec partie
+ */
 void ChessWidget::on_buttonToLast_clicked()
 {
     while (game->nextPosition());
 }
 
+/**
+ * @brief Přejít na tah vybraný kliknutím do notace
+ */
 void ChessWidget::on_textBrowser_cursorPositionChanged()
 {
     int position = ui->textBrowser->textCursor().position();
@@ -292,6 +365,9 @@ void ChessWidget::on_textBrowser_cursorPositionChanged()
     game->setPosition(line, player);
 }
 
+/**
+ * @brief Zapíná a vypíná automatické přehrávání partie
+ */
 void ChessWidget::on_buttonPlayPause_clicked()
 {
     if (timer->isActive())
@@ -304,6 +380,9 @@ void ChessWidget::on_buttonPlayPause_clicked()
     }
 }
 
+/**
+ * @brief Mění časovač přehrávání podle zadaného textu
+ */
 void ChessWidget::on_lineEdit_editingFinished()
 {
     std::string S = ui->lineEdit->text().toUtf8().constData();
@@ -338,6 +417,9 @@ void ChessWidget::on_lineEdit_editingFinished()
     }
 }
 
+/**
+ * @brief Událost při tiku časovače, nastaví další tah
+ */
 void ChessWidget::timer_tick()
 {
     if (!game->nextPosition())
