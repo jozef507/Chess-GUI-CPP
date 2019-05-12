@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/19/2019.
-//
+/**
+ * Trieda reprezentuje rozhranie pre figúrky.
+ * @author Jozef Ondria
+ */
 
 #ifndef ICP_FIGURE_H
 #define ICP_FIGURE_H

@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+
+/**
+ * Trieda reprezentuje figúrku dámy.
+ * @author Jozef Ondria
+ */
 
 #include "FigureQueen.h"
 #include "FiguresManager.h"

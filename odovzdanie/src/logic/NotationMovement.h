@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 5/3/2019.
-//
+/**
+ * Trieda reprezentuje notáciu jedneho ťahu hry.
+ * @author Jozef Ondria
+ */
 
 #ifndef ICP_NOTATIONMOVEMENT_H
 #define ICP_NOTATIONMOVEMENT_H

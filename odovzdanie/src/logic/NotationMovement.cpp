@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 5/3/2019.
-//
+/**
+ * Trieda reprezentuje notáciu jedneho ťahu hry.
+ * @author Jozef Ondria
+ */
 
 #include "NotationMovement.h"
 

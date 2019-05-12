@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/24/2019.
-//
+/**
+ * Trieda reprezentuje aktuálny ťah hry.
+ * @author Jozef Ondria
+ */
 
 #ifndef ICP_MOVEMENTMANAGER_H
 #define ICP_MOVEMENTMANAGER_H

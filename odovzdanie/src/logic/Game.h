@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/24/2019.
-//
+/**
+ * Trieda reprezentuje rozhranie pre logiku aplikacie.
+ * @author Jozef Ondria
+ */
 
 #ifndef ICP_GAME_H
 #define ICP_GAME_H

@@ -1,6 +1,8 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+/**
+ * Trieda reprezentuje figúrku strelca.
+ * @author Jozef Ondria
+ */
+
 
 #ifndef ICP_FIGUREBISHOP_H
 #define ICP_FIGUREBISHOP_H

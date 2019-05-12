@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+/**
+ * Trieda reprezentuje figúrku strelca.
+ * @author Jozef Ondria
+ */
 
 #include "FigureBishop.h"
 #include "FiguresManager.h"

@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/21/2019.
-//
+/**
+ * Trieda obsahuje reprezentáciu políčka šachovnice.
+ * @author Jozef Ondria
+ */
 
 #include "Field.h"
 #include "Figure.h"

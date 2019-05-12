@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/21/2019.
-//
+/**
+ * Trieda obsahuje reprezentáciu políčka šachovnice.
+ * @author Jozef Ondria
+ */
 
 #ifndef ICP_FIELD_H
 #define ICP_FIELD_H

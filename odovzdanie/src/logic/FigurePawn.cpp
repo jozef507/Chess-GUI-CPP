@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/21/2019.
-//
+/**
+ * Trieda reprezentuje figúrku pešiaka.
+ * @author Jozef Ondria
+ */
 
 #include <cmath>
 #include "FigurePawn.h"

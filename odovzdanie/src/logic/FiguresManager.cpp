@@ -1,6 +1,9 @@
-//
-// Created by Jozef on 5/3/2019.
-//
+/**
+ * Trieda reprezentuje manažéra pre aktívne/pasívne figúrky.
+ * @author Jozef Ondria
+ */
+
+
 #include <iostream>
 #include "FiguresManager.h"
 #include "Figure.h"

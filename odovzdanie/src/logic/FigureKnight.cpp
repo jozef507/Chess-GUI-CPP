@@ -1,6 +1,7 @@
-//
-// Created by Jozef on 4/25/2019.
-//
+/**
+ * Trieda reprezentuje figúrku jazdca.
+ * @author Jozef Ondria
+ */
 
 #include "FigureKnight.h"
 #include "FiguresManager.h"
