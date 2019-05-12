@@ -1,3 +1,11 @@
+/**
+ * chesstypes.h
+ *
+ * Typy pro šachové figury
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #ifndef CHESSTYPES_H
 #define CHESSTYPES_H
 

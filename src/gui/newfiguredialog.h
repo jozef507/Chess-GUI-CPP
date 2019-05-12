@@ -1,3 +1,11 @@
+/**
+ * newfiguredialog.h
+ *
+ * Dialogové okno pro výběr nové figury
+ *
+ * Autor: Jan Holásek (xholas09)
+ */
+
 #ifndef NEWFIGUREDIALOG_H
 #define NEWFIGUREDIALOG_H
 
@@ -17,12 +25,24 @@ public:
     ~NewFigureDialog();
 
 private slots:
+    /**
+     * @brief Vybrán jezdec
+     */
     void on_buttonKnight_clicked();
 
+    /**
+     * @brief Vybrán střelec
+     */
     void on_buttonBishop_clicked();
 
+    /**
+     * @brief Vybrána věž
+     */
     void on_buttonRook_clicked();
 
+    /**
+     * @brief Vybrána dáma
+     */
     void on_buttonQueen_clicked();
 
 private:

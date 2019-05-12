@@ -16,6 +16,7 @@ BoardWidget::~BoardWidget()
     delete ui;
 }
 
+
 void BoardWidget::setGame(QtGame* newGame)
 {
     game = newGame;
@@ -23,74 +24,9 @@ void BoardWidget::setGame(QtGame* newGame)
     updateBoard();
 }
 
-void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
+int BoardWidget::heightForWidth(int w) const
 {
-    QLabel* newFigure = new QLabel(this);
-    QPixmap img;
-
-    if (team == TeamColor::white)
-    {
-        switch (type) {
-        case FigureType::pawn:
-            img = QPixmap(":img/pawnWhite");
-            break;
-        case FigureType::rook:
-            img = QPixmap(":img/rookWhite");
-            break;
-        case FigureType::knight:
-            img = QPixmap(":img/knightWhite");
-            break;
-        case FigureType::bishop:
-            img = QPixmap(":img/bishopWhite");
-            break;
-        case FigureType::queen:
-            img = QPixmap(":img/queenWhite");
-            break;
-        case FigureType::king:
-            img = QPixmap(":img/kingWhite");
-            break;
-        default:
-            return;
-        }
-    }
-    else
-    {
-        switch (type) {
-        case FigureType::pawn:
-            img = QPixmap(":img/pawnBlack");
-            break;
-        case FigureType::rook:
-            img = QPixmap(":img/rookBlack");
-            break;
-        case FigureType::knight:
-            img = QPixmap(":img/knightBlack");
-            break;
-        case FigureType::bishop:
-            img = QPixmap(":img/bishopBlack");
-            break;
-        case FigureType::queen:
-            img = QPixmap(":img/queenBlack");
-            break;
-        case FigureType::king:
-            img = QPixmap(":img/kingBlack");
-            break;
-        default:
-            return;
-        }
-    }
-
-    int newFigureSize = static_cast<int>( figureSize * scale );
-
-    newFigure->setPixmap(img.scaled(newFigureSize, newFigureSize, Qt::KeepAspectRatio));
-    newFigure->move(getFigureImgPosition(posX, posY));
-
-    unsigned long long X = static_cast<unsigned long long>(posX);
-    unsigned long long Y = static_cast<unsigned long long>(posY);
-
-    figures[X][Y] = newFigure;
-
-    // To fix figures disappearing when rezized
-    newFigure->show();
+    return w;
 }
 
 void BoardWidget::moveFigure(int srcX, int srcY, int dstX, int dstY)
@@ -177,6 +113,77 @@ void BoardWidget::updatePosition(int posX, int posY)
     }
 }
 
+
+void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
+{
+    QLabel* newFigure = new QLabel(this);
+    QPixmap img;
+
+    if (team == TeamColor::white)
+    {
+        switch (type) {
+        case FigureType::pawn:
+            img = QPixmap(":img/pawnWhite");
+            break;
+        case FigureType::rook:
+            img = QPixmap(":img/rookWhite");
+            break;
+        case FigureType::knight:
+            img = QPixmap(":img/knightWhite");
+            break;
+        case FigureType::bishop:
+            img = QPixmap(":img/bishopWhite");
+            break;
+        case FigureType::queen:
+            img = QPixmap(":img/queenWhite");
+            break;
+        case FigureType::king:
+            img = QPixmap(":img/kingWhite");
+            break;
+        default:
+            return;
+        }
+    }
+    else
+    {
+        switch (type) {
+        case FigureType::pawn:
+            img = QPixmap(":img/pawnBlack");
+            break;
+        case FigureType::rook:
+            img = QPixmap(":img/rookBlack");
+            break;
+        case FigureType::knight:
+            img = QPixmap(":img/knightBlack");
+            break;
+        case FigureType::bishop:
+            img = QPixmap(":img/bishopBlack");
+            break;
+        case FigureType::queen:
+            img = QPixmap(":img/queenBlack");
+            break;
+        case FigureType::king:
+            img = QPixmap(":img/kingBlack");
+            break;
+        default:
+            return;
+        }
+    }
+
+    int newFigureSize = static_cast<int>( figureSize * scale );
+
+    newFigure->setPixmap(img.scaled(newFigureSize, newFigureSize, Qt::KeepAspectRatio));
+    newFigure->move(getFigureImgPosition(posX, posY));
+
+    unsigned long long X = static_cast<unsigned long long>(posX);
+    unsigned long long Y = static_cast<unsigned long long>(posY);
+
+    figures[X][Y] = newFigure;
+
+    // To fix figures disappearing when rezized
+    newFigure->show();
+}
+
 QPoint BoardWidget::getFigureImgPosition(int x, int y)
 {
     int posX = static_cast<int>( ((boardSquareSize * x) + boardBorderSize) * scale );
@@ -191,11 +198,6 @@ QPoint BoardWidget::getFigureBoardPosition(int x, int y)
     int posY = 7 - static_cast<int>( (static_cast<double>( y ) / scale - boardBorderSize) / boardSquareSize );
 
     return  QPoint(posX, posY);
-}
-
-int BoardWidget::heightForWidth(int w) const
-{
-    return w;
 }
 
 void BoardWidget::resizeEvent(QResizeEvent* event)
