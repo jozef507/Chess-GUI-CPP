@@ -3,7 +3,7 @@
  *
  * Hlavní okno programu, obsahuje záložky s jednotlivými partiemi
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef MAINWINDOW_H

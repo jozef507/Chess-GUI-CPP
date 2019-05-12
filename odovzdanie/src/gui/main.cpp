@@ -3,7 +3,7 @@
  *
  * Main - spuštění programu
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #include "mainwindow.h"

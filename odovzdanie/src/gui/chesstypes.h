@@ -3,7 +3,7 @@
  *
  * Typy pro šachové figury
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef CHESSTYPES_H

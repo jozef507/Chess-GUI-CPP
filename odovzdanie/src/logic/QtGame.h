@@ -3,7 +3,7 @@
  *
  * Rozhraní pro zjednodušení logiky hry a komunikaci s GUI
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef QTGAME_H

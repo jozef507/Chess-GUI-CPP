@@ -3,7 +3,7 @@
  *
  * Qt widget řešící zobrazení jedné šachové partie včetně notace
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef CHESSWIDGET_H

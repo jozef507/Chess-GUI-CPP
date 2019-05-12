@@ -3,7 +3,7 @@
  *
  * Qt widget řešící zobrazení šachovnice a figur
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #include "boardwidget.h"

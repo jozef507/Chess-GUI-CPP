@@ -3,7 +3,7 @@
  *
  * Rozhraní pro aktualizaci GUI z logiky hry
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef GUIINTERFACE_H

@@ -3,7 +3,7 @@
  *
  * Dialogové okno pro výběr nové figury
  *
- * Autor: Jan Holásek (xholas09)
+ * @author Jan Holásek (xholas09)
  */
 
 #ifndef NEWFIGUREDIALOG_H
