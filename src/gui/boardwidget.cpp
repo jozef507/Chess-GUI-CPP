@@ -32,22 +32,22 @@ void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
     {
         switch (type) {
         case FigureType::pawn:
-            img = QPixmap(":img/pawn_white.png");
+            img = QPixmap(":img/pawnWhite");
             break;
         case FigureType::rook:
-            img = QPixmap(":img/rogue_white.png");
+            img = QPixmap(":img/rookWhite");
             break;
         case FigureType::knight:
-            img = QPixmap(":img/knight_white.png");
+            img = QPixmap(":img/knightWhite");
             break;
         case FigureType::bishop:
-            img = QPixmap(":img/bishop_white.png");
+            img = QPixmap(":img/bishopWhite");
             break;
         case FigureType::queen:
-            img = QPixmap(":img/queen_white.png");
+            img = QPixmap(":img/queenWhite");
             break;
         case FigureType::king:
-            img = QPixmap(":img/king_white.png");
+            img = QPixmap(":img/kingWhite");
             break;
         default:
             return;
@@ -57,22 +57,22 @@ void BoardWidget::addFigure(FigureType type, TeamColor team, int posX, int posY)
     {
         switch (type) {
         case FigureType::pawn:
-            img = QPixmap(":img/pawn_black.png");
+            img = QPixmap(":img/pawnBlack");
             break;
         case FigureType::rook:
-            img = QPixmap(":img/rogue_black.png");
+            img = QPixmap(":img/rookBlack");
             break;
         case FigureType::knight:
-            img = QPixmap(":img/knight_black.png");
+            img = QPixmap(":img/knightBlack");
             break;
         case FigureType::bishop:
-            img = QPixmap(":img/bishop_black.png");
+            img = QPixmap(":img/bishopBlack");
             break;
         case FigureType::queen:
-            img = QPixmap(":img/queen_black.png");
+            img = QPixmap(":img/queenBlack");
             break;
         case FigureType::king:
-            img = QPixmap(":img/king_black.png");
+            img = QPixmap(":img/kingBlack");
             break;
         default:
             return;
@@ -126,7 +126,7 @@ void BoardWidget::changeFigure(FigureType type, TeamColor color, int posX, int p
 
 void BoardWidget::updateBoard()
 {
-    QPixmap newBoardPixmap(":/img/board.png");
+    QPixmap newBoardPixmap(":/img/board");
     ui->boardLabel->setPixmap(newBoardPixmap.scaled(ui->boardLabel->width(), ui->boardLabel->height(), Qt::KeepAspectRatio));
 
     scale = static_cast<double>(ui->boardLabel->width()) / 1000;

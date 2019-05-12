@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
+
+    on_actionNewGame_triggered();
 }
 
 MainWindow::~MainWindow()

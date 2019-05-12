@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>136</height>
+    <width>535</width>
+    <height>141</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,7 +30,7 @@
      </property>
      <property name="icon">
       <iconset resource="resources.qrc">
-       <normaloff>:/img/knight_white.png</normaloff>:/img/knight_white.png</iconset>
+       <normaloff>:/img/knightWhite</normaloff>:/img/knightWhite</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -50,7 +50,7 @@
      </property>
      <property name="icon">
       <iconset resource="resources.qrc">
-       <normaloff>:/img/bishop_white.png</normaloff>:/img/bishop_white.png</iconset>
+       <normaloff>:/img/bishopWhite</normaloff>:/img/bishopWhite</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -70,7 +70,7 @@
      </property>
      <property name="icon">
       <iconset resource="resources.qrc">
-       <normaloff>:/img/rogue_white.png</normaloff>:/img/rogue_white.png</iconset>
+       <normaloff>:/img/rookWhite</normaloff>:/img/rookWhite</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -90,7 +90,7 @@
      </property>
      <property name="icon">
       <iconset resource="resources.qrc">
-       <normaloff>:/img/queen_white.png</normaloff>:/img/queen_white.png</iconset>
+       <normaloff>:/img/queenWhite</normaloff>:/img/queenWhite</iconset>
      </property>
      <property name="iconSize">
       <size>

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <QWidget>
+#include <QTimer>
 
 #include "guiinterface.h"
 #include "boardwidget.h"
@@ -46,11 +47,19 @@ private slots:
 
     void on_textBrowser_cursorPositionChanged();
 
+    void on_buttonPlayPause_clicked();
+
+    void on_lineEdit_editingFinished();
+
+    void timer_tick();
+
 private:
     Ui::ChessWidget *ui;
 
     BoardWidget* board;
     QtGame* game;
+
+    QTimer* timer;
 
     bool saved;
     QString fileName;

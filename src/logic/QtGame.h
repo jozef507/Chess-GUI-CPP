@@ -21,7 +21,7 @@ public:
     ~QtGame();
 
     bool isNotationCorrect();
-    void updateNotation();
+    void updateNotation(bool changed = false);
     bool saveFile(std::string fileName = "");
 
     TeamColor getActivePlayer();

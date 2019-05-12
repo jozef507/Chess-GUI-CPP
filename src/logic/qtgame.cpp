@@ -29,12 +29,12 @@ bool QtGame::isNotationCorrect()
     return gameLogic->isNotationRight();
 }
 
-void QtGame::updateNotation()
+void QtGame::updateNotation(bool changed)
 {
     std::vector<std::string> notation = gameLogic->getGameNotation();
     int notationIndex = gameLogic->getIndexOfGameNotation() + 1;
 
-    gui->updateNotation(notation, notationIndex);
+    gui->updateNotation(notation, notationIndex, changed);
 }
 
 bool QtGame::saveFile(std::string fileName)
@@ -144,12 +144,15 @@ bool QtGame::nextPosition()
 
     if(gameLogic->getIsChangingFigure())
     {
+        int typeId = gameLogic->getChangingFigureID();
+
+        gameLogic->createNewFigure(typeId);
+
+
         int col = gameLogic->getGoalFieldCol();
         int row = gameLogic->getGoalFieldRow();
 
-        int typeId = gameLogic->getChangingFigureID();
         FigureType figureType = typeFromId(typeId);
-
         TeamColor figureColor = gameLogic->getIsWhiteFigureOnField(col, row) ? TeamColor::white : TeamColor::black;
 
         gui->changeFigureType(figureType, figureColor, col - 1, row - 1);
@@ -303,7 +306,7 @@ bool QtGame::addMove(int srcX, int srcY, int dstX, int dstY)
     gameLogic->completeNotationMovement();
     gameLogic->changePlayer();
 
-    updateNotation();
+    updateNotation(true);
 
     return true;
 }

@@ -14,7 +14,7 @@ ChessWidget::ChessWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    saved = false;
+    saved = true;
     fileName = nullptr;
 
     // Chess board
@@ -24,6 +24,10 @@ ChessWidget::ChessWidget(QWidget *parent) :
     game = new QtGame(this);
 
     board->setGame(game);
+
+    timer = new QTimer(this);
+    timer->setInterval(1000);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timer_tick()));
 }
 
 ChessWidget::~ChessWidget()
@@ -286,4 +290,58 @@ void ChessWidget::on_textBrowser_cursorPositionChanged()
     TeamColor player = part == 1 ? TeamColor::white : TeamColor::black;
 
     game->setPosition(line, player);
+}
+
+void ChessWidget::on_buttonPlayPause_clicked()
+{
+    if (timer->isActive())
+    {
+        timer->stop();
+    }
+    else
+    {
+        timer->start();
+    }
+}
+
+void ChessWidget::on_lineEdit_editingFinished()
+{
+    std::string S = ui->lineEdit->text().toUtf8().constData();
+
+    int i;
+    try
+    {
+        i = static_cast<int>( std::stod(S) * 1000 );
+    }
+    catch (...)
+    {
+        i = 1000;
+    }
+
+    if (i > 1000000 || i < 0)
+    {
+        i = 1000;
+    }
+
+    if (timer->interval() != i)
+    {
+        timer->setInterval(i);
+    }
+
+//QMessageBox::information(nullptr, nullptr, ("HERE: " + std::to_string(i)).c_str() );
+
+    std::string newS = std::to_string((i/1000)) + "." + std::to_string(i%1000).substr(0, 2) + "s";
+
+    if (newS != S)
+    {
+        ui->lineEdit->setText(newS.c_str());
+    }
+}
+
+void ChessWidget::timer_tick()
+{
+    if (!game->nextPosition())
+    {
+        timer->stop();
+    }
 }
