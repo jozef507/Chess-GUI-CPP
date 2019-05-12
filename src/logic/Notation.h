@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <cctype>
 class NotationMovement;
 class FiguresManager;
 class MovementManager;
@@ -205,6 +206,9 @@ public:
     * Nastaví notáciu ako nesprávnu chybovou hláškou.
     */
     void setWrongNotation();
+
+    void setIsRight(bool is);
+
 
 };
 
