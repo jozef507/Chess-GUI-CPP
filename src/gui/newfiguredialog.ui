@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Automaticky vygeneroval QtCreator, autor: Jan Holásek (xholas09) -->
 <ui version="4.0">
  <class>NewFigureDialog</class>
  <widget class="QDialog" name="NewFigureDialog">
